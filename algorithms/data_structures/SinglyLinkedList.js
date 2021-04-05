@@ -44,17 +44,19 @@ class SinglyLinkedList {
 
   /**
    * Determines if this list is empty.
-   * - Time: (?).
-   * - Space: (?).
+   * - Time: O(1) constant.
+   * - Space: O(1) constant.
    * @returns {boolean}
    */
-  isEmpty() {}
+  isEmpty() {
+    return this.head === null;
+  }
 
   /**
    * Creates a new node with the given data and inserts it at the back of
    * this list.
-   * - Time: (?).
-   * - Space: (?).
+   * - Time: O(n) linear, n = length of list.
+   * - Space: O(1) constant.
    * @param {any} data The data to be added to the new node.
    * @returns {SinglyLinkedList} This list.
    */
@@ -79,13 +81,18 @@ class SinglyLinkedList {
   }
 
   /**
-   * Adds each item of the given array to the back of this list.
-   * - Time: (?).
-   * - Space: (?).
+   * Calls insertAtBack on each item of the given array.
+   * - Time: O(n * m) n = list length, m = arr.length.
+   * - Space: O(1) constant.
    * @param {Array<any>} vals The data for each new node.
    * @returns {SinglyLinkedList} This list.
    */
-  seedFromArr(vals) {}
+  seedFromArr(vals) {
+    for (const item of vals) {
+      this.insertAtBack(item);
+    }
+    return this;
+  }
 }
 
 const emptyList = new SinglyLinkedList();
