@@ -1,5 +1,8 @@
+using System;
+
 namespace FrequentFlyers
 {
+    // A class has "Members" which are properties / fields and methods. These things have membership to the class.
     public class Passenger
     {
         // Auto-implemented Property
@@ -13,6 +16,22 @@ namespace FrequentFlyers
             // the class property is being set with the value from the parameter.
             FirstName = firstName;
             LastName = lastName;
+        }
+
+        public void BookFlight(Flight flight)
+        {
+            flight.BookedPassengers.Add(this);
+            Console.WriteLine($"There are now {flight.BookedPassengers.Count} booked passengers.");
+        }
+
+        public bool CheckIn(Flight flight)
+        {
+            return flight.MovePassenger(this, flight.BookedPassengers, flight.CheckedInPassengers);
+        }
+
+        public bool BoardFlight(Flight flight)
+        {
+            return flight.MovePassenger(this, flight.CheckedInPassengers, flight.BoardedPassengers);
         }
 
         public string FullName()
