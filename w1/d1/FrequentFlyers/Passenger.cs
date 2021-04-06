@@ -8,6 +8,7 @@ namespace FrequentFlyers
         // Auto-implemented Property
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public int Age { get; set; }
 
         // Constructor is a method with same name as class name. It auto returns the new instance.
         public Passenger(string firstName, string lastName)
@@ -16,6 +17,16 @@ namespace FrequentFlyers
             // the class property is being set with the value from the parameter.
             FirstName = firstName;
             LastName = lastName;
+        }
+
+        // This is a 2nd constructor, but it has a different signature because it has different params
+        public Passenger(string firstName, string lastName, int age)
+        {
+            // equivalent to this.FirstName = firstName
+            // the class property is being set with the value from the parameter.
+            FirstName = firstName;
+            LastName = lastName;
+            Age = age;
         }
 
         public void BookFlight(Flight flight)
@@ -37,6 +48,12 @@ namespace FrequentFlyers
         public string FullName()
         {
             return FirstName + " " + LastName;
+        }
+
+        // Instead of printing FrequentFlyers.Passenger it will now print their full name.
+        public override string ToString()
+        {
+            return FullName();
         }
     }
 }
