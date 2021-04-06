@@ -9,6 +9,8 @@ namespace FrequentFlyers
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int Age { get; set; }
+        // Not using this, but this is a way to relate the passenger to a single flight.
+        public Flight CurrentFlight { get; set; }
 
         // Constructor is a method with same name as class name. It auto returns the new instance.
         public Passenger(string firstName, string lastName)
