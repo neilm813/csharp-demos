@@ -171,31 +171,99 @@ class SinglyLinkedList {
 
   /**
    * Determines whether or not the given search value exists in this list.
-   * - Time: (?).
-   * - Space: (?).
+   * - Time: O(n) linear, n = length of list.
+   * - Space: O(1) constant.
    * @param {any} val The data to search for in the nodes of this list.
    * @returns {boolean}
    */
-  contains(val) {}
+  contains(val) {
+    let runner = this.head;
+
+    while (runner) {
+      if (runner.data === val) {
+        return true;
+      }
+      runner = runner.next;
+    }
+    return false;
+  }
 
   /**
    * Determines whether or not the given search value exists in this list.
-   * - Time: (?).
-   * - Space: (?).
+   * - Time: O(n) linear, n = length of list.
+   * - Space: O(1) constant.
    * @param {any} val The data to search for in the nodes of this list.
    * @param {?node} current The current node during the traversal of this list
    *    or null when the end of the list has been reached.
    * @returns {boolean}
    */
-  containsRecursive(val, current = this.head) {}
+  containsRecursive(val, current = this.head) {
+    if (current === null) {
+      return false;
+    }
+    if (current.data === val) {
+      return true;
+    }
+    return this.containsRecursive(val, current.next);
+  }
 
   /**
    * Removes the last node of this list.
-   * - Time: (?).
-   * - Space: (?).
+   * - Time: O(n) linear, n = length of list.
+   * - Space: O(1) constant.
    * @returns {any} The data from the node that was removed.
    */
-  removeBack() {}
+  removeBack() {
+    if (this.isEmpty()) {
+      return null;
+    }
+
+    // Only 1 node.
+    if (this.head.next === null) {
+      return this.removeHead();
+    }
+
+    // More than 1 node.
+    let runner = this.head;
+
+    while (runner.next.next) {
+      runner = runner.next;
+    }
+
+    // after while loop finishes, runner is now at 2nd to last node
+    const removedData = runner.next.data;
+    runner.next = null; // remove it from list
+    return removedData;
+  }
+
+  /**
+   * Removes the last node of this list.
+   * - Time: O(n) linear, n = length of list.
+   * - Space: O(1) constant.
+   * @returns {any} The data from the node that was removed.
+   */
+  removeBack2() {
+    let removedData = null;
+
+    if (!this.isEmpty()) {
+      if (this.head.next === null) {
+        // head only node
+        removedData = this.head.data;
+        this.head = null; // remove it from list
+      } else {
+        let runner = this.head;
+        // right of && will only be checked if left is true
+        while (runner.next && runner.next.next) {
+          runner = runner.next;
+        }
+
+        // after while loop finishes, runner is now at 2nd to last node
+        removedData = runner.next.data;
+        runner.next = null; // remove it from list
+      }
+    }
+    return removedData;
+  }
 }
 
 const emptyList = new SinglyLinkedList();
