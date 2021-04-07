@@ -13,8 +13,8 @@ namespace Puzzles
 
             // Console.WriteLine($"TossCoin() returned {TossCoin()}");
 
-            // double headsRatio = TossMultipleCoins(5);
-            // Console.WriteLine(headsRatio);
+            double headsRatio = TossMultipleCoins(5);
+            Console.WriteLine(headsRatio);
 
             List<string> longNames = Names();
             Console.WriteLine(String.Join(", ", longNames));
