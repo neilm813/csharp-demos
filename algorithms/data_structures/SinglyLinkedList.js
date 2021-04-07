@@ -196,19 +196,6 @@ class SinglyLinkedList {
    * @returns {any} The data from the node that was removed.
    */
   removeBack() {}
-
-  // EXTRA
-  /**
-   * Recursively finds the maximum integer data of the nodes in this list.
-   * - Time: (?).
-   * - Space: (?).
-   * @param {Node} runner The start or current node during traversal, or null
-   *    when the end of the list is reached.
-   * @param {Node} maxNode Keeps track of the node that contains the current
-   *    max integer as it's data.
-   * @returns {?number} The max int or null if none.
-   */
-  recursiveMax(runner = this.head, maxNode = this.head) {}
 }
 
 const emptyList = new SinglyLinkedList();
