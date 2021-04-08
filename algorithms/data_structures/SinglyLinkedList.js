@@ -272,7 +272,22 @@ class SinglyLinkedList {
    * @returns {any} The data of the second to last node or null if there is no
    *    second to last node.
    */
-  secondToLast() {}
+  secondToLast() {
+    // If empty or 1 node only.
+    if (this.isEmpty() || this.head.next === null) {
+      return null;
+    }
+
+    // More than 1 node.
+    let runner = this.head;
+
+    while (runner.next.next) {
+      runner = runner.next;
+    }
+
+    // after while loop finishes, runner is now at 2nd to last node
+    return runner.data;
+  }
 
   /**
    * Removes the node that has the matching given val as it's data.
@@ -282,18 +297,71 @@ class SinglyLinkedList {
    *    node to be removed.
    * @returns {boolean} Indicates if a node was removed or not.
    */
-  removeVal(val) {}
+  removeVal(val) {
+    if (this.isEmpty()) {
+      return false;
+    }
 
-  // EXTRA
+    if (this.head.data === val) {
+      this.removeHead();
+      return true;
+    }
+
+    let runner = this.head;
+
+    while (runner.next.next) {
+      if (runner.next.data === val) {
+        // runner is 1 node before the node to be removed.
+        runner.next = runner.next.next;
+        return true;
+      }
+      runner = runner.next;
+    }
+
+    // No matching data found.
+    return false;
+  }
+
   /**
-   * Inserts a new node before a node that has the given value as its data.
-   * - Time: (?).
-   * - Space: (?).
+   * Inserts a new node before a node with that has a specified value.
+   * - Time: O(n) linear, n = list length, because we could end up pre-pending
+   *    to the last node.
+   * - Space: O(1) constant.
    * @param {any} newVal The value to use for the new node that is being added.
    * @param {any} targetVal The value to use to find the node that the newVal
    *    should be inserted in front of.
+   * @returns {boolean} To indicate whether the node was prepended or not.
    */
-  prepend(newVal, targetVal) {}
+  prepend(newVal, targetVal) {
+    const newNode = new Node(newVal);
+
+    if (this.isEmpty()) {
+      return false;
+    }
+
+    if (this.head.data === targetVal) {
+      newNode.next = this.head;
+      this.head = newNode;
+      return true;
+    }
+
+    // we already know we're not going to need to prepend before the head
+    let runner = this.head;
+
+    while (runner) {
+      // End of list and not found.
+      if (runner.next === null) {
+        return false;
+      }
+
+      if (runner.next.data === targetVal) {
+        newNode.next = runner.next;
+        runner.next = newNode;
+        return true;
+      }
+      runner = runner.next;
+    }
+  }
 }
 
 const emptyList = new SinglyLinkedList();
@@ -331,3 +399,10 @@ const sortedDupeList = new SinglyLinkedList().seedFromArr([
   5,
   5,
 ]);
+
+console.log(emptyList.removeVal(5), "should equal", false);
+console.log(singleNodeList.removeVal(1), "should equal", true);
+console.log(singleNodeList.toArr(), "should be empty list");
+console.log(biNodeList.removeVal(5), "should equal", false);
+console.log(firstThreeList.removeVal(2), "should equal", true);
+console.log(firstThreeList.toArr(), "2 should be removed");
