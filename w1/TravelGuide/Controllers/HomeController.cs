@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TravelGuide.Controllers
@@ -22,6 +23,7 @@ namespace TravelGuide.Controllers
         [HttpGet("travel/{destination}")]
         public RedirectToActionResult Unknown(string destination)
         {
+            List<string> x = new List<string>();
             Console.WriteLine($"URL destination: {destination}");
 
             // redirect to Index method (action).
