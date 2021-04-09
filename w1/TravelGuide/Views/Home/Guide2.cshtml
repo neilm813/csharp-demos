@@ -3,7 +3,7 @@
 
   Uppercase @Model to access the data this page received.
 *@
-@model Traveler
+@model GuidePage
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,11 +16,10 @@
 </head>
 
 <body>
-  <a href="">Home</a>
-  <h2>Greetings @Model.FullName(), where would you like to travel?</h2>
+  <h2>Greetings @Model.Traveler.FullName(), where would you like to travel?</h2>
 
   <ul>
-    @foreach (Destination destination in ViewBag.Locations)
+    @foreach (Destination destination in Model.Destinations)
     {
       <li>
         <a href="/travel/@destination.Name">@destination.Name</a>

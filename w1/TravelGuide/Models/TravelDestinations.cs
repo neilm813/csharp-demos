@@ -13,7 +13,22 @@ namespace TravelGuide.Models
             new Destination("Hormuz Island", "https://i.pinimg.com/originals/7b/5d/fe/7b5dfe78e7a86eb2808c200973a46a83.jpg"),
             new Destination("Giant Crystal Cave", "https://cdn.tourismontheedge.com/wp-content/uploads/2013/01/Naica.Mine_.jpg"),
             new Destination("Hell", "https://i.guim.co.uk/img/static/sys-images/Guardian/Pix/pictures/2014/7/17/1405616925070/e1c101a3-2d79-4c22-869b-d65473479e5d-2060x1373.jpeg?width=940&quality=85&auto=format&fit=max&s=ba7e6537b8b4eba098f852088fe7c27d"),
-            new Destination("Bed", "https://img-9gag-fun.9cache.com/photo/arovENB_460s.jpg")
+            new Destination("Bed", "https://img-9gag-fun.9cache.com/photo/arovENB_460s.jpg"),
+            new Destination("Coober Pedy", "https://cdn.odysseytraveller.com/app/uploads/2020/04/Coober-Pedy-church-2048x1363.jpg"),
+            new Destination("Astana", "https://i.pinimg.com/originals/8e/df/93/8edf93c56382b1eb8f28ed8c16d86f79.jpg")
         };
+
+        static public Destination FindByName(string name)
+        {
+            foreach (Destination dest in TravelDestinations.Destinations)
+            {
+                if (dest.Name == name)
+                {
+                    return dest;
+                }
+            }
+
+            return new Destination();
+        }
     }
 }

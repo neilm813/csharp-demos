@@ -21,22 +21,48 @@ namespace TravelGuide.Controllers
             return View("Index");
         }
 
+        /* 
+        Reminder: A form needs TWO routes.
+        First: Route to render / display form.
+        Second: Route to receive form submission.
+        */
+        // [HttpPost("/guide")]
+        // public ViewResult Guide(Traveler newTraveler)
+        // {
+        //     /* 
+        //     Problem: pass two different kinds of data to a page.
+
+        //     Solution: Use ViewBag + ViewModel
+        //     */
+        //     ViewBag.Locations = TravelDestinations.Destinations;
+        //     /* 
+        //     The data passed to this page must match the data type of the
+        //     @model in the .cshtml file.
+        //     */
+        //     return View("Guide", newTraveler);
+        // }
+
+        // Alternatively, use a wrapper class.
         [HttpPost("/guide")]
-        public ViewResult Guide(Traveler newTravel)
+        public ViewResult Guide(Traveler newTraveler)
         {
             /* 
             Problem: pass two different kinds of data to a page.
 
-            Solution: Use ViewBag + ViewModel
             Solution: Create a new class that contains all the data inside it
             and pass that to the view as a ViewModel.
             */
-            ViewBag.Locations = TravelDestinations.Destinations;
+            GuidePage guidePage = new GuidePage()
+            {
+                Traveler = newTraveler,
+                Destinations = TravelDestinations.Destinations
+            };
+
             /* 
             The data passed to this page must match the data type of the
             @model in the .cshtml file.
             */
-            return View("Guide", newTravel);
+            return View("Guide2", guidePage);
         }
 
 
@@ -45,20 +71,11 @@ namespace TravelGuide.Controllers
         {
             Console.WriteLine($"URL destination: {chosenDestination}");
 
-            Destination fullDestination = new Destination();
-
-            foreach (Destination dest in TravelDestinations.Destinations)
-            {
-                if (dest.Name == chosenDestination)
-                {
-                    fullDestination = dest;
-                }
-            }
-
+            Destination fullDestination = TravelDestinations.FindByName(chosenDestination);
             return View("Destination", fullDestination);
         }
 
-        [HttpGet("{path}")]
+        [HttpGet("{*path}")]
         public RedirectToActionResult Unknown(string path)
         {
             Console.WriteLine($"Unknown URL: {path}");
