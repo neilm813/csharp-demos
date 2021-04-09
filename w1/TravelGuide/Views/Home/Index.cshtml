@@ -1,3 +1,10 @@
+@* syntax 1 *@
+@* @model TravelGuide.Models.Traveler *@
+
+@* syntax 2: the @using is needed unless you add it to Views/_ViewImports.cshtml file *@
+@* @using TravelGuide.Models *@
+@model Traveler
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,26 +17,27 @@
 </head>
 
 <body>
-  @{
-    List<string> travelDestinations = new List<string>()
-  {
-  "Longyearbyen", "Solovetsky Islands", "Socotra", "Bhutan"
-  };
-  }
 
   <h1 class="text-center">Travel Guide</h1>
+  <hr>
   <h2>@ViewBag.Introduction</h2>
-  <img src="@ViewBag.ImgUrl" alt="Are You Ready FOr Your Quest">
+  <img src="@ViewBag.ImgUrl" alt="Are You Ready For Your Quest">
   <p>Travel guide created in @ViewBag.YearCreated</p>
 
-  <ul>
-    @foreach (string destination in travelDestinations)
-    {
-      <li>
-        <a href="/travel/@destination">@destination</a>
-      </li>
-    }
-  </ul>
+  <h3>Greetings, what is your name traveller?</h3>
+
+  <form action="/guide" method="POST">
+    <div>
+      <label>First Name</label>
+      <input type="text" name="FirstName">
+    </div>
+
+    <div>
+      <label>Last Name</label>
+      <input type="text" name="LastName">
+    </div>
+    <button>Please Guide Me On A Journey!</button>
+  </form>
 
 </body>
 

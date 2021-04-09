@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using TravelGuide.Models;
 
 namespace TravelGuide.Controllers
 {
@@ -11,7 +12,7 @@ namespace TravelGuide.Controllers
         {
             ViewBag.Introduction = "My name is Falconhoof and I will be your guide on your quest.";
             ViewBag.YearCreated = "2021";
-            ViewBag.ImgUrl = "https://ih1.redbubble.net/image.230236822.2041/raf,750x1000,075,t,101010:01c5ca27c6.u3.jpg";
+            ViewBag.ImgUrl = "https://thumbs.gfycat.com/EnviousZealousCanadagoose-small.gif";
 
             /* 
             If no string passed in, will use look for a .cshtml file named the
@@ -20,11 +21,47 @@ namespace TravelGuide.Controllers
             return View("Index");
         }
 
-        [HttpGet("travel/{destination}")]
-        public RedirectToActionResult Unknown(string destination)
+        [HttpPost("/guide")]
+        public ViewResult Guide(Traveler newTravel)
         {
-            List<string> x = new List<string>();
-            Console.WriteLine($"URL destination: {destination}");
+            /* 
+            Problem: pass two different kinds of data to a page.
+
+            Solution: Use ViewBag + ViewModel
+            Solution: Create a new class that contains all the data inside it
+            and pass that to the view as a ViewModel.
+            */
+            ViewBag.Locations = TravelDestinations.Destinations;
+            /* 
+            The data passed to this page must match the data type of the
+            @model in the .cshtml file.
+            */
+            return View("Guide", newTravel);
+        }
+
+
+        [HttpGet("/travel/{chosenDestination}")]
+        public ViewResult Destination(string chosenDestination)
+        {
+            Console.WriteLine($"URL destination: {chosenDestination}");
+
+            Destination fullDestination = new Destination();
+
+            foreach (Destination dest in TravelDestinations.Destinations)
+            {
+                if (dest.Name == chosenDestination)
+                {
+                    fullDestination = dest;
+                }
+            }
+
+            return View("Destination", fullDestination);
+        }
+
+        [HttpGet("{path}")]
+        public RedirectToActionResult Unknown(string path)
+        {
+            Console.WriteLine($"Unknown URL: {path}");
 
             // redirect to Index method (action).
             return RedirectToAction("Index");
