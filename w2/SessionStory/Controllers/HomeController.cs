@@ -52,7 +52,7 @@ namespace SessionStory.Controllers
             string story = HttpContext.Session.GetString("story");
             story += " " + storyFragment.Word;
             HttpContext.Session.SetString("story", story);
-            return View("StoryTime");
+            return RedirectToAction("StoryTime");
         }
 
         [HttpGet("")]
