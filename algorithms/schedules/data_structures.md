@@ -10,6 +10,7 @@
 - [Stack](../data_structures/Stack.js)
 - [LinkedListStack](../data_structures/LinkedListStack.js)
 - [Queue](../data_structures/Queue.js)
+- [LinkedListQueue](../data_structures/LinkedListQueue.js)
 
 ### W2 Mon
 
