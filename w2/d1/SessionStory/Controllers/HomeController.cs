@@ -35,6 +35,13 @@ namespace SessionStory.Controllers
         [HttpGet("/story")]
         public IActionResult StoryTime()
         {
+            int? contributionCount = HttpContext.Session.GetInt32("contributionCount");
+
+            if (contributionCount == null)
+            {
+                HttpContext.Session.SetInt32("contributionCount", 0);
+            }
+
             string story = HttpContext.Session.GetString("story");
 
             if (story == null)
@@ -52,6 +59,10 @@ namespace SessionStory.Controllers
             string story = HttpContext.Session.GetString("story");
             story += " " + storyFragment.Word;
             HttpContext.Session.SetString("story", story);
+
+            int currentCount = (int)HttpContext.Session.GetInt32("contributionCount");
+            currentCount += 1;
+            HttpContext.Session.SetInt32("contributionCount", currentCount + 1);
             return RedirectToAction("StoryTime");
         }
 

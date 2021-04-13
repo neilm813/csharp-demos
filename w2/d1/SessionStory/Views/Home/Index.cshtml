@@ -4,6 +4,10 @@
 
 @model User
 
+<p>
+    There have been @Context.Session.GetInt32("contributionCount") contributions.
+</p>
+
 <form asp-controller="Home" asp-action="Login" method="POST">
     <div class="form-group">
         <label class="">Username</label>

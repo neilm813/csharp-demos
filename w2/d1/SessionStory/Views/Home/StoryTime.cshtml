@@ -12,7 +12,7 @@
   } for joining us for Story Time!
 </h2>
 
-<p>Here is the story, thus far:</p>
+<p>Here is the story, thus far. There have been @Context.Session.GetInt32("contributionCount") contributions.</p>
 <p class="shadow p-3 rounded">@Context.Session.GetString("story")</p>
 
 <form asp-controller="Home" asp-action="AddToStory" method="POST" class="p-3 border rounded">
