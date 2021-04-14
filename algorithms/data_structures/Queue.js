@@ -1,3 +1,5 @@
+const Stack = require("./Stack");
+
 /**
  * Class to represent a queue using an array to store the queued items.
  * Follows a FIFO (First In First Out) order where new items are added to the
@@ -98,5 +100,7 @@ class Queue {
    * - Space: O(n) from the stack being used to store the items again.
    * @returns {boolean}
    */
-  isPalindrome() {}
+  isPalindrome() {
+    const stack = new Stack();
+  }
 }
