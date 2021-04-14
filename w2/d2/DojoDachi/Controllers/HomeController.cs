@@ -24,13 +24,17 @@ namespace DojoDachi.Controllers
         {
             Pet sessionPet = HttpContext.Session.GetObjectFromJson<Pet>("Pet");
 
+            if (HttpContext.Session.GetString("GameStatus") == null)
+            {
+                HttpContext.Session.SetString("GameStatus", "Playing");
+            }
+
             if (sessionPet == null)
             {
                 Pet newPet = new Pet();
                 HttpContext.Session.SetObjectAsJson("Pet", newPet);
                 return View("Index", newPet);
             }
-
             return View("Index", sessionPet);
         }
 
@@ -38,13 +42,7 @@ namespace DojoDachi.Controllers
         public IActionResult Feed()
         {
             Pet sessionPet = HttpContext.Session.GetObjectFromJson<Pet>("Pet");
-
-            string gameStatus = sessionPet.Feed();
-            // Running .Feed updated our Pet so we need to add the new data to session.
-            HttpContext.Session.SetObjectAsJson("Pet", sessionPet);
-
-            HttpContext.Session.SetString("GameStatus", gameStatus);
-
+            sessionPet.Feed(HttpContext.Session);
             return RedirectToAction("Index");
             // return View("Index", sessionPet);
         }
@@ -53,13 +51,7 @@ namespace DojoDachi.Controllers
         public IActionResult Play()
         {
             Pet sessionPet = HttpContext.Session.GetObjectFromJson<Pet>("Pet");
-
-            string gameStatus = sessionPet.Play();
-
-            HttpContext.Session.SetObjectAsJson("Pet", sessionPet);
-
-            HttpContext.Session.SetString("GameStatus", gameStatus);
-
+            sessionPet.Play(HttpContext.Session);
             return RedirectToAction("Index");
         }
 
@@ -67,13 +59,7 @@ namespace DojoDachi.Controllers
         public IActionResult Sleep()
         {
             Pet sessionPet = HttpContext.Session.GetObjectFromJson<Pet>("Pet");
-
-            string gameStatus = sessionPet.Sleep();
-
-            HttpContext.Session.SetObjectAsJson("Pet", sessionPet);
-
-            HttpContext.Session.SetString("GameStatus", gameStatus);
-
+            sessionPet.Sleep(HttpContext.Session);
             return RedirectToAction("Index");
         }
 

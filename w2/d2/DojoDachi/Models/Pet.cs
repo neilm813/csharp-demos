@@ -1,4 +1,5 @@
 using System;
+using Microsoft.AspNetCore.Http;
 
 namespace DojoDachi.Models
 {
@@ -35,7 +36,7 @@ namespace DojoDachi.Models
             Energy = 50;
         }
 
-        public string Feed()
+        public string Feed(ISession session)
         {
             if (Meals > 0)
             {
@@ -47,10 +48,11 @@ namespace DojoDachi.Models
                 }
             }
 
+            UpdateSession(session);
             return State;
         }
 
-        public string Play()
+        public string Play(ISession session)
         {
             Energy -= 5;
 
@@ -59,24 +61,33 @@ namespace DojoDachi.Models
                 Happiness += new Random().Next(5, 11);
             }
 
+            UpdateSession(session);
             return State;
         }
 
-        public string Work()
+        public string Work(ISession session)
         {
             Energy -= 5;
             Meals += new Random().Next(1, 4);
 
+            UpdateSession(session);
             return State;
         }
 
-        public string Sleep()
+        public string Sleep(ISession session)
         {
             Energy += 15;
             Fullness -= 5;
             Happiness -= 5;
 
+            UpdateSession(session);
             return State;
+        }
+
+        public void UpdateSession(ISession session)
+        {
+            session.SetObjectAsJson("Pet", this);
+            session.SetString("GameStatus", State);
         }
 
         public bool RandomlyDislikes()

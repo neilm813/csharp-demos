@@ -22,6 +22,10 @@
             Energy @Model.Energy
         </span>
     </h2>
+    @* Requires @using Microsoft.AspNetCore.Http in _ViewImports.cshtml
+        and services.AddHttpContextAccessor(); in ConfigureServices in Startup.cs
+
+    *@
     <h4>@Context.Session.GetString("GameStatus")</h4>
 
     @* All these could be anchor tags becauase no data is being posted *@
