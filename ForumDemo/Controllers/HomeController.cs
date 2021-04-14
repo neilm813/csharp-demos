@@ -11,8 +11,6 @@ namespace ForumDemo.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
         private ForumDemoContext db;
         public HomeController(ForumDemoContext context)
         {
