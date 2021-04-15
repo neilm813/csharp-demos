@@ -49,3 +49,11 @@
   - Write a method on the Queue class that returns whether or not the queue is a palindrome
   - Use only 1 stack as additional storage (no additional arrays / objects).
   - Do not manually index the queue via bracket notation, use the provided queue methods and stack methods, restore the queue to original order when done.
+
+### W2 Thur
+
+- sumOfHalvesEqual
+  - Create a method on the array Queue class that returns whether or not the sum of the first half of the queue is equal to the sum of the second half
+  - DO NOT manually index the queue items via bracket notation, only use the provided queue methods, use no additional arrays or objects for storage.
+  - Restore the queue to it's original state before returning.
+- [TwoStackQueue](../data_structures/TwoStackQueue.js)
