@@ -31,6 +31,18 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Posts" asp-action="All">All
                                 Posts</a>
                         </li>
+
+                        @* Logout button, if logged in. *@
+                        @if (@Context.Session.GetString("FullName") != null)
+                        {
+                            <li class="nav-item">
+                                <form asp-controller="Home" asp-action="Logout" method="POST">
+                                    <button class="btn btn-link">
+                                        Logout (@Context.Session.GetString("FullName"))
+                                    </button>
+                                </form>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
