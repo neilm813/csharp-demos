@@ -33,7 +33,7 @@
                         </li>
 
                         @* Logout button, if logged in. *@
-                        @if (@Context.Session.GetString("FullName") != null)
+                        @if (@Context.Session.GetInt32("UserId") != null)
                         {
                             <li class="nav-item">
                                 <form asp-controller="Home" asp-action="Logout" method="POST">
