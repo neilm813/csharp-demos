@@ -57,3 +57,8 @@
   - DO NOT manually index the queue items via bracket notation, only use the provided queue methods, use no additional arrays or objects for storage.
   - Restore the queue to it's original state before returning.
 - [TwoStackQueue](../data_structures/TwoStackQueue.js)
+
+### W2 Fri
+
+- PriorityQueue (create enqueue and dequeue methods)
+  - Design a new PriorityQueue class where the queue maintains an ascending order when items are added based on a queue item's provided priority integer value. A priority value of 1 is most important which means it should be at the front of the queue, the first to be dequeued.
