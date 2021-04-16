@@ -22,5 +22,13 @@ namespace ForumDemo.Models
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
+
+        /* Relationship Properties */
+        // A post can be created by only 1 user
+        // 1 User : many Post
+        // Foreign Key (FK)
+        public int UserId { get; set; }
+        // Navigation Prop
+        public User Author { get; set; }
     }
 }

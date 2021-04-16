@@ -9,7 +9,7 @@
       @Model.Body
     </p>
     <small class="text-muted">
-      Submitted: @Model.CreatedAt
+      Submitted by @Model.Author.FullName() on @Model.CreatedAt
     </small>
   </div>
 

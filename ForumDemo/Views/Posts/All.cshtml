@@ -25,7 +25,11 @@
           @post.Body
         </p>
         <small class="text-muted">
-          Submitted: @post.CreatedAt
+          Submitted by
+          <a asp-controller="Home" asp-action="Details" asp-route-userId="@post.Author.UserId">
+            @post.Author.FirstName @post.Author.LastName
+          </a>
+          on @post.CreatedAt
         </small>
       </div>
 

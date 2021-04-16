@@ -2,12 +2,30 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ForumDemo.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ForumDemo.Controllers
 {
     public class PostsController : Controller
     {
+        private int? uid
+        {
+            get
+            {
+                return HttpContext.Session.GetInt32("UserId");
+            }
+        }
+
+        private bool isLoggedIn
+        {
+            get
+            {
+                return uid != null;
+            }
+        }
+
         private ForumDemoContext db;
         public PostsController(ForumDemoContext context)
         {
@@ -17,15 +35,24 @@ namespace ForumDemo.Controllers
         [HttpGet("/posts")]
         public IActionResult All()
         {
-            List<Post> allPosts = db.Posts.ToList();
-            return View("All", allPosts);
+            if (isLoggedIn)
+            {
+                List<Post> allPosts = db.Posts.Include(post => post.Author).ToList();
+                return View("All", allPosts);
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         // Params from the URL get turned into method params.
         [HttpGet("/posts/{postId}")]
         public IActionResult Details(int postId)
         {
-            Post post = db.Posts.FirstOrDefault(p => p.PostId == postId);
+            if (!isLoggedIn)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            Post post = db.Posts.Include(p => p.Author).FirstOrDefault(p => p.PostId == postId);
 
             if (post == null)
             {
@@ -39,7 +66,11 @@ namespace ForumDemo.Controllers
         [HttpGet("/posts/new")]
         public IActionResult New()
         {
-            return View("New");
+            if (isLoggedIn)
+            {
+                return View("New");
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost("/posts/create")]
@@ -56,17 +87,13 @@ namespace ForumDemo.Controllers
 
             // ModelState IS valid
 
-            /* 
-            This Add method auto generates SQL code:
-            INSERT INTO posts (Topic, Body, ImgUrl, CreatedAt, UpdatedAt)
-            VALUES ("topic data", "body data", "img url data", NOW(), NOW());
-            */
+            newPost.UserId = (int)uid; // related this post to the author.
             db.Posts.Add(newPost);
             // db doesn't update until we run save changes
             // After SaveChanges, our newPost object now has it's PostId from the db.
             db.SaveChanges();
 
-            return RedirectToAction("All");
+            return RedirectToAction("Details", new { postId = newPost.PostId });
         }
 
         [HttpPost("/posts/{postId}/delete")]
@@ -85,6 +112,11 @@ namespace ForumDemo.Controllers
         [HttpGet("/posts/{postId}/edit")]
         public IActionResult Edit(int postId)
         {
+            if (!isLoggedIn)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             Post post = db.Posts.FirstOrDefault(p => p.PostId == postId);
 
             // It could be null if user types invalid id directly into address bar.

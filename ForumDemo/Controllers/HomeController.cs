@@ -8,11 +8,28 @@ using Microsoft.Extensions.Logging;
 using ForumDemo.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace ForumDemo.Controllers
 {
     public class HomeController : Controller
     {
+        private int? uid
+        {
+            get
+            {
+                return HttpContext.Session.GetInt32("UserId");
+            }
+        }
+
+        private bool isLoggedIn
+        {
+            get
+            {
+                return uid != null;
+            }
+        }
+
         private ForumDemoContext db;
         public HomeController(ForumDemoContext context)
         {
@@ -23,6 +40,10 @@ namespace ForumDemo.Controllers
         [HttpGet("")]
         public IActionResult Index()
         {
+            if (isLoggedIn)
+            {
+                return RedirectToAction("All", "Posts");
+            }
             return View();
         }
 
@@ -112,6 +133,19 @@ namespace ForumDemo.Controllers
         {
             HttpContext.Session.Clear();
             return RedirectToAction("Index");
+        }
+
+        [HttpGet("/users/{userId}")]
+        public IActionResult Details(int userId)
+        {
+            User user = db.Users.Include(user => user.Posts).FirstOrDefault(u => u.UserId == userId);
+
+            if (user == null)
+            {
+                return RedirectToAction("All", "Posts");
+            }
+
+            return View("Details", user);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
