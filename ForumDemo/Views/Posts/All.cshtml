@@ -5,7 +5,14 @@
 <div class="container">
   <h2 class="text-center">All Posts</h2>
   <hr>
-
+  @*
+    Using a partial so this page can both display a @model List<Post> and create a @model Post
+  *@
+  @{
+    Post newPost = new Post();
+  }
+  <partial name="_CreateForm" model="@newPost"></partial>
+  <hr>
   @foreach (Post post in Model)
   {
     <div class="card shadow-sm rounded mx-auto w-50 mb-3">
