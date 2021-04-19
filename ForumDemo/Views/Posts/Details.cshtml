@@ -1,5 +1,13 @@
 @model Post
 
+@{
+  bool alreadyLiked = Model.Likes.Any(like => like.UserId == Context.Session.GetInt32("UserId"));
+
+  @* Could also do this and check if it's null *@
+  @* UserLikesPosts existingLike = Model.Likes.FirstOrDefault(like => like.UserId == Context.Session.GetInt32("UserId"));
+  *@
+}
+
 <div class="card shadow-sm rounded mx-auto w-75 mb-3">
   <h4 class="card-title text-center bg-dark text-light py-2 rounded-top">
     @Model.Topic
@@ -17,4 +25,28 @@
   {
     <img width="100%" src="@Model.ImgUrl" alt="Post Media" class="card-img-bottom">
   }
+
+  <div class="card-footer text-left">
+    <form asp-controller="Posts" asp-action="Like" asp-route-postId="@Model.PostId" method="POST">
+      <button class="btn btn-outline-info">
+        @if (alreadyLiked)
+        {
+          <span>Unlike</span>
+        }
+        else
+        {
+          <span>Like</span>
+        }
+      </button>
+    </form>
+
+    <u>Liked By</u>
+    <ul class="list-style-type-none">
+      @foreach (UserLikesPosts like in Model.Likes)
+      {
+        <li>@like.User.FullName()</li>
+      }
+    </ul>
+
+  </div>
 </div>

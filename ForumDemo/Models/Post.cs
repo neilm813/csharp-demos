@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace ForumDemo.Models
@@ -30,5 +31,7 @@ namespace ForumDemo.Models
         public int UserId { get; set; }
         // Navigation Prop
         public User Author { get; set; }
+        public List<UserLikesPosts> Likes { get; set; }
+
     }
 }

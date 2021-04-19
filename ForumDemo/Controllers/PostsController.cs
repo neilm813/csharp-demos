@@ -37,7 +37,18 @@ namespace ForumDemo.Controllers
         {
             if (isLoggedIn)
             {
-                List<Post> allPosts = db.Posts.Include(post => post.Author).ToList();
+                /*
+                .Include is always dealing with the model of the table queried.
+
+                .ThenInclude is dealing with the model that was just added from
+                the .Include immediately before it.
+                */
+                List<Post> allPosts = db.Posts
+                    .Include(post => post.Author)
+                    .Include(post => post.Likes)
+                    .ThenInclude(like => like.User)
+                    .ToList();
+
                 return View("All", allPosts);
             }
             return RedirectToAction("Index", "Home");
@@ -52,7 +63,13 @@ namespace ForumDemo.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            Post post = db.Posts.Include(p => p.Author).FirstOrDefault(p => p.PostId == postId);
+            /* See comment in All method for .Include info. */
+            Post post = db.Posts
+                .Include(p => p.Author)
+                .Include(p => p.Likes)
+                .ThenInclude(like => like.User)
+                .FirstOrDefault(p => p.PostId == postId)
+                ;
 
             if (post == null)
             {
@@ -161,6 +178,38 @@ namespace ForumDemo.Controllers
             */
             return RedirectToAction("Details", new { postId = postId });
             // return Redirect($"/posts/{postId}");
+        }
+
+        [HttpPost("/posts/{postId}/like")]
+        public IActionResult Like(int postId)
+        {
+            UserLikesPosts existingLike = db.UserLikesPosts.FirstOrDefault(ulp => ulp.UserId == (int)uid);
+
+            if (existingLike != null)
+            {
+                db.UserLikesPosts.Remove(existingLike);
+            }
+            else
+            {
+
+                /* 
+                Normally the model is instantiated for us in the params of the
+                method, but because the page this form is on already has it's own
+                model, we will instantiate it ourselves. Otherwise we could put
+                the form into a <partial> view to give it a @model so it would be
+                auto instantiated.
+                */
+                UserLikesPosts newLike = new UserLikesPosts()
+                {
+                    UserId = (int)uid,
+                    PostId = postId
+                };
+
+                db.UserLikesPosts.Add(newLike);
+            }
+
+            db.SaveChanges();
+            return RedirectToAction("Details", new { postId = postId });
         }
     }
 

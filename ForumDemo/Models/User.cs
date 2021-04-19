@@ -40,6 +40,7 @@ namespace ForumDemo.Models
         /* Relationship Properties */
         // 1 User : Many Post
         public List<Post> Posts { get; set; }
+        public List<UserLikesPosts> Likes { get; set; }
 
         // Methods
         public string FullName()
