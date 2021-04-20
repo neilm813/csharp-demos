@@ -11,12 +11,15 @@ namespace TravelPlanner.Models
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
 
-        /* Relationship & Navigation Properties */
+        /**********************************************************************
+        Relationship properties: foreign keys and navigation properties. 
+        Navigation properties are null unless .Include is used. 
+        "Object reference not set to an instance of an object"
+        will be the error if accessed but not included. 
+        **********************************************************************/
         public int UserId { get; set; }
-        // Only available if using .Include
         public User User { get; set; } // User who liked.
         public int TripId { get; set; }
-        // Only available if using .Include
         public Trip Trip { get; set; } // Trip that the User liked.
     }
 }
