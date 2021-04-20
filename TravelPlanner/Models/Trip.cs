@@ -18,6 +18,8 @@ namespace TravelPlanner.Models
         [MinLength(10, ErrorMessage = "must be at least 10 characters.")]
         public string Description { get; set; }
 
+        [Display(Name = "Trip Date")]
+        [DataType(DataType.Date)]
         public DateTime Date { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;

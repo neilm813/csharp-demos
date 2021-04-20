@@ -39,6 +39,11 @@ namespace TravelPlanner.Controllers
         [HttpGet("")]
         public IActionResult Index()
         {
+            if (isLoggedIn)
+            {
+                return RedirectToAction("All", "Trips");
+            }
+
             return View();
         }
 
