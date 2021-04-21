@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using static TravelPlanner.CustomValidators;
 
 namespace TravelPlanner.Models
 {
@@ -20,6 +21,7 @@ namespace TravelPlanner.Models
 
         [Display(Name = "Trip Date")]
         [DataType(DataType.Date)]
+        [FutureDate]
         public DateTime Date { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;

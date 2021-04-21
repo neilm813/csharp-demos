@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using TravelPlanner.Models;
 
@@ -44,7 +45,11 @@ namespace TravelPlanner.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            return View("All");
+            List<Trip> trips = db.Trips
+                .Include(trip => trip.CreatedBy)
+                .ToList();
+
+            return View("All", trips);
         }
 
         [HttpGet("/trips/new")]
@@ -61,20 +66,6 @@ namespace TravelPlanner.Controllers
         [HttpPost("/trips/create")]
         public IActionResult Create(Trip newTrip)
         {
-
-            // To get rid of the default error: The value '' is invalid.
-            // So that we can add our own.
-            if (ModelState.ContainsKey("Date") == true)
-            {
-                ModelState["Date"].Errors.Clear();
-            }
-
-
-            if (newTrip.Date <= DateTime.Now)
-            {
-                ModelState.AddModelError("Date", "must be in the future.");
-            }
-
             if (!ModelState.IsValid)
             {
                 // To display validation errors.
@@ -103,7 +94,9 @@ namespace TravelPlanner.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            Trip trip = db.Trips.FirstOrDefault(t => t.TripId == tripId);
+            Trip trip = db.Trips
+                .Include(trip => trip.CreatedBy)
+                .FirstOrDefault(t => t.TripId == tripId);
 
             if (trip == null)
             {
@@ -111,6 +104,71 @@ namespace TravelPlanner.Controllers
             }
 
             return View("Details", trip);
+        }
+
+        [HttpGet("/trips/{tripId}/edit")]
+        public IActionResult Edit(int tripId)
+        {
+            Trip trip = db.Trips.FirstOrDefault(t => t.TripId == tripId);
+
+            if (trip == null || trip.UserId != uid)
+            {
+                return RedirectToAction("All");
+            }
+
+            return View("Edit", trip);
+        }
+
+        [HttpPost("/trips/{tripId}/update")]
+        public IActionResult Update(Trip editedTrip, int tripId)
+        {
+            if (!ModelState.IsValid)
+            {
+                /* 
+                "Object reference not set to an instance of an object" if we
+                don't pass the editedTrip back with the TripId because the form
+                has asp-route-tripId="@Model.TripId" so it needs the TripId.
+                */
+                editedTrip.TripId = tripId;
+                // Go back to form to display errors.
+                return View("Edit", editedTrip);
+            }
+
+            Trip dbTrip = db.Trips.FirstOrDefault(t => t.TripId == tripId);
+
+            if (dbTrip == null)
+            {
+                return RedirectToAction("All");
+            }
+
+            dbTrip.UpdatedAt = DateTime.Now;
+            dbTrip.Name = editedTrip.Name;
+            dbTrip.Description = editedTrip.Description;
+            dbTrip.Date = editedTrip.Date;
+
+            db.Trips.Update(dbTrip);
+            db.SaveChanges();
+
+            /* 
+            WHENEVER REDIRECTING to a method that has params, you must pass in
+            a 'new' dictionary: new { paramName = valueForParam }
+            */
+            return RedirectToAction("Details", new { tripId = dbTrip.TripId });
+        }
+
+        [HttpPost("/trips/{tripId}/delete")]
+        public IActionResult Delete(int tripId)
+        {
+            Trip trip = db.Trips.FirstOrDefault(t => t.TripId == tripId);
+
+            if (trip == null)
+            {
+                return RedirectToAction("All");
+            }
+
+            db.Trips.Remove(trip);
+            db.SaveChanges();
+            return RedirectToAction("All");
         }
     }
 }
