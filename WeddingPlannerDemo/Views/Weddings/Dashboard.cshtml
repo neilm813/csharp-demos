@@ -1,0 +1,68 @@
+@model List<Wedding>
+
+@{
+  int? uid = Context.Session.GetInt32("UserId");
+}
+
+<div class="row align-items-center justify-content-between mb-3">
+  <h2 class="mr-2">Welcome to the Wedding Planner</h2>
+  <form asp-controller="Home" asp-action="Logout" method="POST">
+    <button class="btn btn-link">Logout (@Context.Session.GetString("FullName"))</button>
+  </form>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Wedding</th>
+      <th>Date</th>
+      <th>Guest</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (Wedding wedding in Model)
+    {
+
+      bool isAlreadyAttending = wedding.RSVPs.Any(r => r.UserId == uid);
+      @* bool isAlreadyAttending = wedding.RSVPs.FirstOrDefault(r => r.UserId == uid) != null; *@
+
+      <tr>
+        <td>
+          <a asp-controller="Weddings" asp-action="Details" asp-route-weddingId="@wedding.WeddingId">
+            @wedding.WedderOne & @wedding.WedderTwo
+          </a>
+        </td>
+        <td>@wedding.Date.ToString("MMM d yyyy")</td>
+        <td>@wedding.RSVPs.Count</td>
+        <td>
+          @if (wedding.UserId == uid)
+          {
+            <form asp-controller="Weddings" asp-action="Delete" asp-route-weddingId="@wedding.WeddingId" method="POST">
+              <button class="btn btn-sm btn-outline-danger">Delete</button>
+            </form>
+          }
+          else
+          {
+            <form asp-controller="Weddings" asp-action="RSVP" asp-route-weddingId="@wedding.WeddingId" method="POST">
+              <button class="btn btn-sm btn-outline-secondary">
+                @if (isAlreadyAttending)
+                {
+                  <span>Un-RSVP</span>
+                }
+                else
+                {
+                  <span>RSVP</span>
+                }
+              </button>
+            </form>
+          }
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+<div class="text-right">
+  <a asp-controller="Weddings" asp-action="New" class="btn btn-light">New Wedding</a>
+</div>

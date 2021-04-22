@@ -1,0 +1,26 @@
+@model Wedding
+
+<header class="row justify-content-between align-items-center mb-3">
+  <h2>@Model.WedderOne and @Model.WedderTwo's Wedding</h2>
+  <div class="row align-items-center">
+    <a asp-controller="Weddings" asp-action="Dashboard">Dashboard</a>
+    <form asp-controller="Home" asp-action="Logout" method="POST">
+      <button class="btn btn-link">Logout</button>
+    </form>
+  </div>
+</header>
+
+<p>Date: @Model.Date.ToString("MMMM d, yyyy")</p>
+
+<h3>Guests:</h3>
+<ul class="list-unstyled">
+  @foreach (UserWeddingRSVP rsvp in Model.RSVPs)
+  {
+    <li>
+      @rsvp.Guest.FullName()
+    </li>
+    @* <li>
+      @rsvp.Guest.FirstName @rsvp.Guest.LastName
+      </li> *@
+  }
+</ul>

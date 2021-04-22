@@ -1,0 +1,51 @@
+@model Wedding
+
+<header class="row justify-content-between align-items-center mb-3">
+  <h2>Plan Your Wedding</h2>
+  <div class="row align-items-center">
+    <a asp-controller="Weddings" asp-action="Dashboard">Dashboard</a>
+    <form asp-controller="Home" asp-action="Logout" method="POST">
+      <button class="btn btn-link">Logout</button>
+    </form>
+  </div>
+</header>
+
+<form asp-controller="Weddings" asp-action="Create" method="POST">
+  <div class="form-group row">
+    <label asp-for="WedderOne" class="col-sm-2 col-form-label"></label>
+    <div class="col-sm-5">
+      <span class="text-danger font-weight-bold" asp-validation-for="WedderOne"></span>
+      <input asp-for="WedderOne" class="form-control">
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label asp-for="WedderTwo" class="col-sm-2 col-form-label"></label>
+    <div class="col-sm-5">
+      <span class="text-danger font-weight-bold" asp-validation-for="WedderTwo"></span>
+      <input asp-for="WedderTwo" class="form-control">
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label asp-for="Date" class="col-sm-2 col-form-label"></label>
+    <div class="col-sm-5">
+      <span class="text-danger font-weight-bold" asp-validation-for="Date"></span>
+      <input asp-for="Date" class="form-control" value="2020-12-25">
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label asp-for="Address" class="col-sm-2 col-form-label"></label>
+    <div class="col-sm-5">
+      <span class="text-danger font-weight-bold" asp-validation-for="Address"></span>
+      <input asp-for="Address" class="form-control">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-2 offset-sm-2">
+      <button class="btn btn-light">Create</button>
+    </div>
+  </div>
+</form>
