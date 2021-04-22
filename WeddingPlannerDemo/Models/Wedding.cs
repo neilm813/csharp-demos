@@ -19,6 +19,7 @@ namespace WeddingPlannerDemo.Models
         public string WedderTwo { get; set; }
 
         [FutureDate]
+        [Required(ErrorMessage = "is required.")]
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
 
