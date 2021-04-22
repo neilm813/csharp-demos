@@ -44,6 +44,8 @@ namespace TravelPlanner.Models
         will be the error if accessed but not included. 
         **********************************************************************/
 
+        public List<Trip> SubmittedTrips { get; set; }
+
         // Many User : Many Trip
         public List<UserTripLike> Likes { get; set; }
 

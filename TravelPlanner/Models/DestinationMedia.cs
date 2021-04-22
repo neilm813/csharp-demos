@@ -14,12 +14,14 @@ namespace TravelPlanner.Models
         public string Location { get; set; }
 
         [Required(ErrorMessage = "is required.")]
+        [Display(Name = "Media Url")]
         public string Src { get; set; }
 
         [Required]
         public string Type { get; set; }
 
         [Required]
+        [Display(Name = "Short Description")]
         [MinLength(4, ErrorMessage = "must be between 4 and 255 characters.")]
         [MaxLength(255, ErrorMessage = "must be between 4 and 255 characters.")]
         public string ShortDescription { get; set; }

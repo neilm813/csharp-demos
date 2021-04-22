@@ -96,12 +96,31 @@ namespace TravelPlanner.Controllers
 
             Trip trip = db.Trips
                 .Include(trip => trip.CreatedBy)
+                .Include(trip => trip.TripDestinations)
+                .ThenInclude(td => td.DestinationMedia)
                 .FirstOrDefault(t => t.TripId == tripId);
 
             if (trip == null)
             {
                 return RedirectToAction("New");
             }
+
+            List<DestinationMedia> allDestinations = db.DestinationMedia.ToList();
+            List<DestinationMedia> unrelatedDestinations = new List<DestinationMedia>();
+
+            foreach (DestinationMedia dest in allDestinations)
+            {
+                bool isRelated = trip.TripDestinations
+                    .Any(td => td.DestinationMediaId == dest.DestinationMediaId);
+
+                if (!isRelated)
+                {
+                    unrelatedDestinations.Add(dest);
+                }
+            }
+
+            ViewBag.UnrelatedDestinations = unrelatedDestinations
+                .OrderBy(dest => dest.Location, System.StringComparer.CurrentCultureIgnoreCase);
 
             return View("Details", trip);
         }
@@ -169,6 +188,14 @@ namespace TravelPlanner.Controllers
             db.Trips.Remove(trip);
             db.SaveChanges();
             return RedirectToAction("All");
+        }
+
+        [HttpPost("/trips/{tripId}/add-destination")]
+        public IActionResult AddDestination(TripDestination newTripDest, int tripId)
+        {
+            db.TripDestinations.Add(newTripDest);
+            db.SaveChanges();
+            return RedirectToAction("Details", new { tripId = tripId });
         }
     }
 }
