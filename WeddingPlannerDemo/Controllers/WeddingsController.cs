@@ -91,6 +91,31 @@ namespace WeddingPlannerDemo.Controllers
             return RedirectToAction("Details", new { weddingId = newWedding.WeddingId });
         }
 
+        [HttpPost("/weddings/create2")]
+        public IActionResult Create2(Wedding newWedding)
+        {
+            if (!ModelState.IsValid)
+            {
+                List<Wedding> weddings = db.Weddings
+                    .Include(w => w.RSVPs)
+                    .ToList();
+                // To display validation errors.
+                return View("Dashboard", weddings);
+            }
+
+            // WILL GET THIS ERROR if FK is not assigned:
+            // "foreign key constraint fails"
+            newWedding.UserId = (int)uid;
+            db.Weddings.Add(newWedding);
+            db.SaveChanges();
+
+            /* 
+            WHENEVER REDIRECTING to a method that has params, you must pass in
+            a 'new' dictionary: new { paramName = valueForParam }
+            */
+            return RedirectToAction("Details", new { weddingId = newWedding.WeddingId });
+        }
+
         [HttpGet("/weddings/{weddingId}")]
         public IActionResult Details(int weddingId)
         {
