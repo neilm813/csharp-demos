@@ -73,3 +73,14 @@
 ## Week 4 - Min Heap & Linked Lists Part 2
 
 ### W4 Mon - [SinglyLinkedList](../data_structures/SinglyLinkedList.js)
+
+### W4 Tue - [DoublyLinkedList](../data_structures/DoublyLinkedList.js)
+
+- A Doubly Linked List is a singly linked list with the added functionality of being able to traverse in both directions.
+- Since you can traverse forwards or backwards, that means you should be able to start at the head or tail (end). After creating the necessary classes, then build the following methods:
+- Create the node class that allows for forwards and backwards traversal.
+- insertAtFront
+  - Given some new data, add it as the new head
+- insertAtBack
+  - Given some new data, add it to the back of the DList
+- removeMiddleNode
