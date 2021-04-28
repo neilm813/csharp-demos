@@ -159,22 +159,68 @@ class DoublyLinkedList {
   /**
    * Inserts a new node with the given newVal after the node that has the
    * given targetVal as it's data.
-   * - Time: O(?).
-   * - Space: O(?).
+   * - Time: O(n) linear, n = list length. targetVal could be at opposite of
+   *    starting side.
+   * - Space: O(1) constant.
    * @param {any} targetVal The node data to find.
    * @param {any} newVal Data for the new node.
    * @returns {boolean} Indicates if the new node was added.
    */
-  insertAfter(targetVal, newVal) {}
+  insertAfter(targetVal, newVal) {
+    const newNode = new Node(newVal);
+    let runner = this.head;
+
+    while (runner) {
+      if (runner.data === targetVal) {
+        newNode.prev = runner;
+        newNode.next = runner.next;
+        // below && will only run the right side if runner.next isn't null
+        // runner.next is null if the targetVal is the tail
+        runner.next && (runner.next.prev = newNode);
+        runner.next = newNode;
+
+        if (runner === this.tail) {
+          this.tail = newNode;
+        }
+        return true;
+      } else {
+        runner = runner.next;
+      }
+    }
+    return false;
+  }
 
   /**
    * Inserts a new node with the given newVal before the node that has the
    * given targetVal as it's data.
-   * - Time: O(?).
-   * - Space: O(?).
+   * - Time: O(n) linear, n = list length. targetVal could be at opposite of
+   *    starting side.
+   * - Space: O(1) constant.
    * @param {any} targetVal The node data to find.
    * @param {any} newVal Data for the new node.
    * @returns {boolean} Indicates if the new node was added.
    */
-  insertBefore(targetVal, newVal) {}
+  insertBefore(targetVal, newVal) {
+    const newNode = new Node(newVal);
+    let runner = this.head;
+
+    while (runner) {
+      if (runner.data === targetVal) {
+        newNode.next = runner;
+        newNode.prev = runner.prev;
+        // runner.prev is null if runner is the head
+        // so only do the right side of && if runner.prev isn't null
+        runner.prev && (runner.prev.next = newNode);
+        runner.prev = newNode;
+
+        if (runner === this.head) {
+          this.head = newNode;
+        }
+        return true;
+      } else {
+        runner = runner.next;
+      }
+    }
+    return false;
+  }
 }
