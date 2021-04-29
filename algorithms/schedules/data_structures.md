@@ -84,3 +84,7 @@
 - insertAtBack
   - Given some new data, add it to the back of the DList
 - removeMiddleNode
+
+### W4 Thur - [Heap.js](../data_structures/Heap.js)
+
+- [Heaps Intro](../data_structures/Heaps.md)
