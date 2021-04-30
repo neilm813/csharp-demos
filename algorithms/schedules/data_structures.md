@@ -88,3 +88,7 @@
 ### W4 Thur - [Heap.js](../data_structures/Heap.js)
 
 - [Heaps Intro](../data_structures/Heaps.md)
+
+### FRIDAY
+
+- [rehash](../strings/rehash.js)
