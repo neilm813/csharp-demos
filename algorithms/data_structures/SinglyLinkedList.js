@@ -90,6 +90,10 @@ class SinglyLinkedList {
     }
     return arr;
   }
+
+  print() {
+    console.log(this.toArr());
+  }
 }
 
 const emptyList = new SinglyLinkedList();
