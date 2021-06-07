@@ -48,7 +48,9 @@ class SinglyLinkedList {
    * - Space: (?).
    * @returns {boolean}
    */
-  isEmpty() {}
+  isEmpty() {
+    return this.head === null;
+  }
 
   /**
    * Creates a new node with the given data and inserts it at the back of
@@ -58,7 +60,23 @@ class SinglyLinkedList {
    * @param {any} data The data to be added to the new node.
    * @returns {SinglyLinkedList} This list.
    */
-  insertAtBack(data) {}
+  insertAtBack(data) {
+    const newBack = new Node(data);
+
+    if (this.isEmpty()) {
+      this.head = newBack;
+      return this;
+    }
+
+    let runner = this.head;
+
+    while (runner.next !== null) {
+      runner = runner.next;
+    }
+
+    runner.next = newBack;
+    return this;
+  }
 
   /**
    * Calls insertAtBack on each item of the given array.
@@ -117,3 +135,5 @@ loopList.head.next.next.next = loopList.head.next;
 const sortedDupeList = new SinglyLinkedList().seedFromArr([
   1, 1, 1, 2, 3, 3, 4, 5, 5,
 ]);
+
+firstThreeList.print();
