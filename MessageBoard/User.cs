@@ -34,6 +34,36 @@ namespace MessageBoard
             // return this.FirstName + " " + this.LastName;
         }
 
+        public Message SendMessage(Board board, string content)
+        {
+            if (content.Length < 3)
+            {
+                return null;
+            }
+
+            Message msg = new Message(content, this, board);
+            board.Messages.Add(msg);
+
+            Messages.Add(msg);
+            return msg;
+        }
+
+        public int TotalWordCount()
+        {
+            int total = 0;
+
+            foreach (Message msg in Messages)
+            {
+                total += msg.Content.Split(" ").Length;
+            };
+
+            return total;
+        }
+
+        /* 
+        If you Console.WriteLine a class it runs the default ToString which
+        only prints the name of the class. Here we can re-define what gets printed.
+        */
         public override string ToString()
         {
             // $ lets you insert vars, @ sign preserves formatting like new lines.
