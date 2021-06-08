@@ -43,6 +43,41 @@ class SinglyLinkedList {
   }
 
   /**
+   * Calls insertAtBack on each item of the given array.
+   * - Time: O(n * m) n = list length, m = arr.length.
+   * - Space: O(1) constant.
+   * @param {Array<any>} vals The data for each new node.
+   * @returns {SinglyLinkedList} This list.
+   */
+  seedFromArr(vals) {
+    for (const item of vals) {
+      this.insertAtBack(item);
+    }
+    return this;
+  }
+
+  /**
+   * Converts this list into an array containing the data of each node.
+   * - Time: O(n) linear.
+   * - Space: O(n).
+   * @returns {Array<any>} An array of each node's data.
+   */
+  toArr() {
+    const arr = [];
+    let runner = this.head;
+
+    while (runner) {
+      arr.push(runner.data);
+      runner = runner.next;
+    }
+    return arr;
+  }
+
+  print() {
+    console.log(this.toArr());
+  }
+
+  /**
    * Determines if this list is empty.
    * - Time: (?).
    * - Space: (?).
@@ -77,41 +112,23 @@ class SinglyLinkedList {
     runner.next = newBack;
     return this;
   }
-
   /**
-   * Calls insertAtBack on each item of the given array.
-   * - Time: O(n * m) n = list length, m = arr.length.
-   * - Space: O(1) constant.
-   * @param {Array<any>} vals The data for each new node.
+   * Creates a new node with the given data and inserts that node at the front
+   * of this list.
+   * - Time: (?).
+   * - Space: (?).
+   * @param {any} data The data for the new node.
    * @returns {SinglyLinkedList} This list.
    */
-  seedFromArr(vals) {
-    for (const item of vals) {
-      this.insertAtBack(item);
-    }
-    return this;
-  }
+  insertAtFront(data) {}
 
   /**
-   * Converts this list into an array containing the data of each node.
-   * - Time: O(n) linear.
-   * - Space: O(n).
-   * @returns {Array<any>} An array of each node's data.
+   * Removes the first node of this list.
+   * - Time: (?).
+   * - Space: (?).
+   * @returns {any} The data from the removed node.
    */
-  toArr() {
-    const arr = [];
-    let runner = this.head;
-
-    while (runner) {
-      arr.push(runner.data);
-      runner = runner.next;
-    }
-    return arr;
-  }
-
-  print() {
-    console.log(this.toArr());
-  }
+  removeHead() {}
 }
 
 const emptyList = new SinglyLinkedList();
