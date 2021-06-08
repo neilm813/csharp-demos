@@ -112,23 +112,37 @@ class SinglyLinkedList {
     runner.next = newBack;
     return this;
   }
+
   /**
    * Creates a new node with the given data and inserts that node at the front
-   * of this list.
-   * - Time: (?).
-   * - Space: (?).
+   * of the list.
+   * - Time: O(1) constant.
+   * - Space: O(1) constant.
    * @param {any} data The data for the new node.
    * @returns {SinglyLinkedList} This list.
    */
-  insertAtFront(data) {}
+  insertAtFront(data) {
+    const newHead = new Node(data);
+    newHead.next = this.head;
+    this.head = newHead;
+    return this;
+  }
 
   /**
    * Removes the first node of this list.
-   * - Time: (?).
-   * - Space: (?).
+   * - Time: O(1) constant.
+   * - Space: O(1) constant.
    * @returns {any} The data from the removed node.
    */
-  removeHead() {}
+  removeHead() {
+    if (this.isEmpty()) {
+      return null;
+    }
+
+    const oldHead = this.head;
+    this.head = oldHead.next;
+    return oldHead.data;
+  }
 }
 
 const emptyList = new SinglyLinkedList();
