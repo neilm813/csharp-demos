@@ -8,6 +8,21 @@ namespace MusicLibrary
         public string Description { get; set; }
         public List<Song> Songs { get; set; } = new List<Song>();
 
+        public int TotalDuration 
+        { 
+            get
+            {
+                int total = 0;
+
+                foreach (Song song in Songs)
+                {
+                    total += song.Duration;
+                }
+                
+                return total;
+            }
+        }
+
         // This empty constructor lets you create an instance with all default prop values.
         public Playlist()
         {

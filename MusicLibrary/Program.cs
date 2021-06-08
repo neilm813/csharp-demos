@@ -47,6 +47,8 @@ namespace MusicLibrary
             library.Playlists.Add(playlist2);
 
             Console.WriteLine("Yay music");
+
+            var x = new Test()
         }
     }
 }
