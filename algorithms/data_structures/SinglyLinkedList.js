@@ -143,6 +143,23 @@ class SinglyLinkedList {
     this.head = oldHead.next;
     return oldHead.data;
   }
+
+  /**
+   * Removes the last node of this list.
+   * - Time: (?).
+   * - Space: (?).
+   * @returns {any} The data from the node that was removed.
+   */
+  removeBack() {}
+
+  /**
+   * Determines whether or not the given search value exists in this list.
+   * - Time: (?).
+   * - Space: (?).
+   * @param {any} val The data to search for in the nodes of this list.
+   * @returns {boolean}
+   */
+  contains(val) {}
 }
 
 const emptyList = new SinglyLinkedList();
