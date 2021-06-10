@@ -213,22 +213,56 @@ class SinglyLinkedList {
 
   /**
    * Retrieves the data of the second to last node in this list.
-   * - Time: (?).
-   * - Space: (?).
+   * - Time: O(n - 1) n = list length -> O(n) linear.
+   * - Space: O(1) constant.
    * @returns {any} The data of the second to last node or null if there is no
    *    second to last node.
    */
-  secondToLast() {}
+  secondToLast() {
+    if (!this.head || !this.head.next) {
+      return null;
+    }
+
+    // There are at least 2 nodes since the above return hasn't happened.
+    let runner = this.head;
+
+    while (runner.next.next) {
+      runner = runner.next;
+    }
+    return runner.data;
+  }
 
   /**
-   * Removes the node that has the matching given val as it's data.
-   * - Time: (?).
-   * - Space: (?).
+   * Removes the node that has the given val.
+   * - Time: O(n) linear, n = list length since the last node could be the one
+   *    that is removed.
+   * - Space: O(1) constant.
    * @param {any} val The value to compare to the node's data to find the
    *    node to be removed.
    * @returns {boolean} Indicates if a node was removed or not.
    */
-  removeVal(val) {}
+  removeVal(val) {
+    if (this.isEmpty()) {
+      return false;
+    }
+
+    if (this.head.data === val) {
+      this.head = this.head.next;
+      return true;
+    }
+
+    let runner = this.head;
+
+    while (runner.next && runner.next.data !== val) {
+      runner = runner.next;
+    }
+
+    if (runner.next && runner.next.data === val) {
+      runner.next = runner.next.next;
+      return true;
+    }
+    return false;
+  }
 }
 
 const emptyList = new SinglyLinkedList();
