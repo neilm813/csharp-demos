@@ -210,6 +210,25 @@ class SinglyLinkedList {
     runner.next = null; // remove it from list
     return removedData;
   }
+
+  /**
+   * Retrieves the data of the second to last node in this list.
+   * - Time: (?).
+   * - Space: (?).
+   * @returns {any} The data of the second to last node or null if there is no
+   *    second to last node.
+   */
+  secondToLast() {}
+
+  /**
+   * Removes the node that has the matching given val as it's data.
+   * - Time: (?).
+   * - Space: (?).
+   * @param {any} val The value to compare to the node's data to find the
+   *    node to be removed.
+   * @returns {boolean} Indicates if a node was removed or not.
+   */
+  removeVal(val) {}
 }
 
 const emptyList = new SinglyLinkedList();
