@@ -90,8 +90,8 @@ class SinglyLinkedList {
   /**
    * Creates a new node with the given data and inserts it at the back of
    * this list.
-   * - Time: (?).
-   * - Space: (?).
+   * - Time: O(n) linear, n = length of list.
+   * - Space: O(1) constant.
    * @param {any} data The data to be added to the new node.
    * @returns {SinglyLinkedList} This list.
    */
@@ -266,22 +266,116 @@ class SinglyLinkedList {
 
   /**
    * Concatenates the nodes of a given list onto the back of this list.
-   * - Time: (?).
-   * - Space: (?).
+   * - Time: O(n) n = "this" list length -> O(n) linear.
+   *    addList does not need to be looped over.
+   * - Space: O(1) constant, although this list grows by addList's length,
+   *    our algo doesn't create extra objects or arrays to take up more space.
    * @param {SinglyLinkedList} addList An instance of a different list whose
    *    whose nodes will be added to the back of this list.
    * @returns {SinglyLinkedList} This list with the added nodes.
    */
-  concat(addList) {}
+  concat(addList) {
+    if (this.isEmpty()) {
+      this.head = addList.head;
+      return this;
+    }
+
+    let runner = this.head;
+
+    while (runner.next) {
+      runner = runner.next;
+    }
+    runner.next = addList.head;
+    return this;
+  }
 
   /**
    * Finds the node with the smallest number as data and moves it to the front
    * of this list.
-   * - Time: (?).
-   * - Space: (?).
+   * - Time: O(2n) n = list length -> O(n) linear,
+   *    2nd loop could go to end if min is at end.
+   * - Space: O(1) constant.
    * @returns {SinglyLinkedList} This list.
    */
-  moveMinToFront() {}
+  moveMinToFront() {
+    /* 
+      Alternatively, we could swap the data only in min node and head,
+      but it's better to swap the nodes themselves in case anyone has variables
+      pointing to these nodes already so that we don't unexpectedly change the
+      the data in those nodes potentially causing unwanted side-effects.
+    */
+    if (this.isEmpty()) {
+      return this;
+    }
+
+    let minNode = this.head;
+    let runner = this.head;
+    let prev = this.head;
+
+    while (runner) {
+      if (runner.data < minNode.data) {
+        minNode = runner;
+      }
+
+      runner = runner.next;
+    }
+    // now that we know the min, if it is already the head, nothing needs to be done
+    if (minNode === this.head) {
+      return this;
+    }
+
+    runner = this.head;
+
+    while (runner !== minNode) {
+      prev = runner;
+      runner = runner.next;
+    }
+
+    prev.next = minNode.next; // remove the minNode
+    minNode.next = this.head;
+    this.head = minNode;
+    return this;
+  }
+
+  /**
+   * Finds the node with the smallest data and moves it to the front of
+   * this list.
+   * - Time: O(n) linear, n = list length. This avoids the extra loop in
+   *    the above sln.
+   * - Space: O(n) linear.
+   * @returns {SinglyLinkedList} This list.
+   */
+  moveMinFront() {
+    if (this.isEmpty()) {
+      return this;
+    }
+
+    let minNode = this.head;
+    let runner = this.head;
+    let prev = this.head;
+
+    while (runner) {
+      if (runner.data < minNode.data) {
+        minNode = runner;
+      }
+
+      // make sure the prev stays the prev of minNode
+      // if minNode is last node, we don't want prev to become the runner
+      if (prev.next !== minNode && runner.next !== null) {
+        prev = runner;
+      }
+      runner = runner.next;
+    }
+
+    if (minNode === this.head) {
+      return this;
+    }
+
+    prev.next = minNode.next;
+    minNode.next = this.head;
+    this.head = minNode;
+    return this;
+  }
 }
 
 const emptyList = new SinglyLinkedList();
