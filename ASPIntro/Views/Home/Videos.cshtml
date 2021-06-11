@@ -1,3 +1,11 @@
+@* Specify what kind of data is being passed into this view as the ViewModel. *@
+
+@* Syntax 1 *@
+@* @model ASPIntro.Models.VideosView *@
+
+@* Syntax 2 - Requires Views/_ViewImports.cshtml file.*@
+@model VideosView
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,9 +21,9 @@
 <body class="bg-dark text-light">
   <a href="/">Home</a>
   <h2>Videos!</h2>
-  <h3>Random Number: @ViewBag.RandomNumber</h3>
+  <h3>Random Number: @Model.RandomNumber</h3>
 
-  @foreach (string id in ViewBag.YoutubeVideoIds)
+  @foreach (string id in Model.YoutubeVideoIds)
   {
     <iframe width="560" height="315" src="https://www.youtube.com/embed/@id" title="YouTube video player" frameborder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ASPIntro.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ASPIntro.Controllers
@@ -21,10 +22,30 @@ namespace ASPIntro.Controllers
             "UDA6Kd6uYqs", "eg9_ymCEAF8", "Q8vnqwtOf8E"
             };
 
-            ViewBag.YoutubeVideoIds = youtubeVideoIds;
-            ViewBag.RandomNumber = new System.Random().Next();
+            // This data has been moved into a ViewModel
+            // ViewBag.YoutubeVideoIds = youtubeVideoIds;
+            // ViewBag.RandomNumber = new System.Random().Next();
 
-            return View("Videos");
+            VideosView videosViewModel = new VideosView()
+            {
+                YoutubeVideoIds = youtubeVideoIds,
+                RandomNumber = new Random().Next()
+            };
+
+            return View("Videos", videosViewModel);
+        }
+
+        // Display registration form.
+        [HttpGet("/users/register")]
+        public ViewResult Register()
+        {
+            return View("Register");
+        }
+
+        [HttpPost("/users/process-registration")]
+        public ViewResult ProcessRegistration(User newUser)
+        {
+            return View("Guest", newUser);
         }
 
         [HttpGet("{**path}")]

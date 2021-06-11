@@ -1,0 +1,31 @@
+@model User
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="~/styles.css">
+</head>
+
+<body class="bg-dark text-light">
+  <h2>Register</h2>
+
+  <form action="/users/process-registration" method="POST">
+    <div>
+      <label>First Name</label>
+      @* name attr on input needs to match the prop name in the model class *@
+      <input type="text" name="FirstName">
+    </div>
+    <div>
+      <label>Last Name</label>
+      <input type="text" name="LastName">
+    </div>
+    <button>Submit</button>
+  </form>
+</body>
+
+</html>
