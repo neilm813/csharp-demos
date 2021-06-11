@@ -263,6 +263,25 @@ class SinglyLinkedList {
     }
     return false;
   }
+
+  /**
+   * Concatenates the nodes of a given list onto the back of this list.
+   * - Time: (?).
+   * - Space: (?).
+   * @param {SinglyLinkedList} addList An instance of a different list whose
+   *    whose nodes will be added to the back of this list.
+   * @returns {SinglyLinkedList} This list with the added nodes.
+   */
+  concat(addList) {}
+
+  /**
+   * Finds the node with the smallest number as data and moves it to the front
+   * of this list.
+   * - Time: (?).
+   * - Space: (?).
+   * @returns {SinglyLinkedList} This list.
+   */
+  moveMinToFront() {}
 }
 
 const emptyList = new SinglyLinkedList();
