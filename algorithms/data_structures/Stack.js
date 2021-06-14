@@ -1,3 +1,15 @@
+/*
+  Create a stack class with the following methods and an array to implement a LIFO (Last In First Out) data structure:
+  push
+    - add item to top of stack
+  pop
+    - remove and return top item from stack
+  peek
+    - return top item without removing
+  isEmpty
+  size
+ */
+
 /**
  * Class to represent a stack using an array to store the stacked items.
  * Follows a LIFO (Last In First Out) order where new items are stacked on
@@ -10,8 +22,8 @@ class Stack {
    * @returns {Stack} This new Stack instance is returned without having to
    *    explicitly write 'return' (implicit return).
    */
-  constructor() {
-    this.items = [];
+  constructor(items = []) {
+    this.items = items;
   }
 
   /**
@@ -21,7 +33,10 @@ class Stack {
    * @param {any} item The new item to be added to the top / back.
    * @returns {number} The new length of this stack.
    */
-  push(item) {}
+  push(item) {
+    this.items.push(item);
+    return this.size();
+  }
 
   /**
    * Removes the top / last item from this stack.
@@ -29,7 +44,9 @@ class Stack {
    * - Space: O(1) constant.
    * @returns {any} The removed item or undefined if this stack was empty.
    */
-  pop() {}
+  pop() {
+    return this.items.pop();
+  }
 
   /**
    * Retrieves the top / last item from this stack without removing it.
@@ -37,7 +54,9 @@ class Stack {
    * - Space: O(1) constant.
    * @returns {any} The top / last item of this stack.
    */
-  peek() {}
+  peek() {
+    return this.items[this.items.length - 1];
+  }
 
   /**
    * Returns whether or not this stack is empty.
@@ -45,7 +64,9 @@ class Stack {
    * - Space: O(1) constant.
    * @returns {boolean}
    */
-  isEmpty() {}
+  isEmpty() {
+    return this.items.length === 0;
+  }
 
   /**
    * Returns the size of this stack.
@@ -53,18 +74,21 @@ class Stack {
    * - Space: O(1) constant.
    * @returns {number} The length.
    */
-  size() {}
-}
+  size() {
+    return this.items.length;
+  }
 
-class Node {
-  constructor(data) {
-    this.data = data;
-    this.next = null;
+  /**
+   * Logs the items as a space separated string.
+   * - Time: O(n) linear.
+   * - Space: O(n) linear.
+   * @returns {string} The same string that is logged.
+   */
+  print() {
+    const str = this.items.join(" ");
+    console.log(str);
+    return str;
   }
 }
 
-class LinkedListStack {
-  constructor() {
-    this.head = null;
-  }
-}
+module.exports = Stack;
