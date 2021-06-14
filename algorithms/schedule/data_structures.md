@@ -9,6 +9,7 @@
 ## [Week 2 - Stacks and Queues](../data_structures)
 
 - [Stacks and Queues Intro](../data_structures/StacksAndQueues.md)
+- [Stack](../data_structures/Stack.js)
 
 ### W2 Mon
 
