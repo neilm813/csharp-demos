@@ -71,6 +71,12 @@ namespace SessionLoginValidations.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet("/test")]
+        public IActionResult Test()
+        {
+            return View("Test", new Test());
+        }
+
         public IActionResult Privacy()
         {
             return View();
