@@ -27,6 +27,7 @@
 ### W2 Tue
 
 - [Queue](../data_structures/Queue.js)
+- [LinkedListQueue](../data_structures/LinkedListQueue.js)
 - A Queue is a FIFO (First in First Out) data structure
 - Design a class to represent a queue using an array to store the items.
 - Recreate the queue class using a singly linked list to store the items.
