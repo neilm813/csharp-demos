@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@model Dachi
+
+<div class="text-center">
+    <h1 class="text-center mt-3 mb-5">
+        Win: @Model.IsWinner | Dead: @Model.IsDead
+    </h1>
+    <hr>
+    <div class="row">
+        <div class="col">
+            <h3>Fullness: @Model.Fullness</h3>
+        </div>
+        <div class="col">
+            <h3>Happiness: @Model.Happiness</h3>
+        </div>
+        <div class="col">
+            <h3>Meals: @Model.Meals</h3>
+        </div>
+        <div class="col">
+            <h3>Energy: @Model.Energy</h3>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col">
+            <a asp-controller="Home" asp-action="Feed" class="btn btn-outline-warning">Feed</a>
+        </div>
+        <div class="col">
+            <a asp-controller="Home" asp-action="Play" class="btn btn-outline-primary">Play</a>
+        </div>
+        <div class="col">
+            <a asp-controller="Home" asp-action="Work" class="btn btn-outline-danger">Work</a>
+        </div>
+        <div class="col">
+            <a asp-controller="Home" asp-action="Sleep" class="btn btn-outline-info">Sleep</a>
+        </div>
+    </div>
+    <hr>
+    <a asp-controller="Home" asp-action="Reset" class="btn btn-outline-default">Reset</a>
+</div>
