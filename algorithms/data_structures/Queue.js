@@ -1,3 +1,5 @@
+const Stack = require("./Stack");
+
 /**
  * Class to represent a queue using an array which follows a FIFO
  * (First In First Out) order. New items are added to the back and items are
@@ -91,8 +93,8 @@ class Queue {
    * @returns {boolean} Whether all the items of the two queues are equal and
    *    in the same order.
    */
-
   compareQueues(q2) {}
+
   /**
    * Determines if the queue is a palindrome (same items forward and backwards).
    * Avoid indexing queue items directly via bracket notation, instead use the
