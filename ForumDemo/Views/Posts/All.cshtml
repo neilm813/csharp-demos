@@ -8,7 +8,8 @@
 {
   <div class="card shadow rounded mx-auto w-75 mb-3">
     <h4 class="card-title text-center bg-dark text-light py-2 rounded-top">
-      @post.Topic
+      @* <a href="/posts/@post.PostId">@post.Topic</a> *@
+      <a asp-controller="Posts" asp-action="Details" asp-route-postId="@post.PostId">@post.Topic</a>
     </h4>
 
     <div class="card-body">
@@ -20,6 +21,9 @@
       </small>
     </div>
 
-    <img src="@post.ImgUrl" alt="related to post." class="card-img-bottom">
+    @if (post.ImgUrl != null)
+    {
+      <img src="@post.ImgUrl" alt="related to post." class="card-img-bottom">
+    }
   </div>
 }

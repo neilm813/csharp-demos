@@ -45,5 +45,73 @@ namespace ForumDemo.Controllers
             db.SaveChanges();
             return RedirectToAction("All");
         }
+
+        [HttpGet("/posts/{postId}")]
+        public IActionResult Details(int postId)
+        {
+            Post post = db.Posts.FirstOrDefault(p => p.PostId == postId);
+
+            if (post == null)
+            {
+                return RedirectToAction("All");
+            }
+
+            return View("Details", post);
+        }
+
+        [HttpPost("/posts/{postId}")]
+        public IActionResult Delete(int postId)
+        {
+            Post post = db.Posts.FirstOrDefault(p => p.PostId == postId);
+
+            if (post != null)
+            {
+                db.Posts.Remove(post);
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("All");
+        }
+
+        [HttpGet("/posts/{postId}/edit")]
+        public IActionResult Edit(int postId)
+        {
+            Post post = db.Posts.FirstOrDefault(p => p.PostId == postId);
+
+            if (post == null)
+            {
+                return RedirectToAction("All");
+            }
+
+            return View("Edit", post);
+        }
+
+        [HttpPost("/posts/{postId}/update")]
+        public IActionResult Update(int postId, Post editedPost)
+        {
+            if (ModelState.IsValid == false)
+            {
+                editedPost.PostId = postId;
+                return View("Edit", editedPost);
+            }
+
+            Post dbPost = db.Posts.FirstOrDefault(p => p.PostId == postId);
+
+            if (dbPost == null)
+            {
+                return RedirectToAction("All");
+            }
+
+            dbPost.Topic = editedPost.Topic;
+            dbPost.Body = editedPost.Body;
+            dbPost.ImgUrl = editedPost.ImgUrl;
+            dbPost.UpdatedAt = DateTime.Now;
+
+            db.Posts.Update(dbPost);
+            db.SaveChanges();
+
+            // Dict matches Details params     new { paramName = paramValue }
+            return RedirectToAction("Details", new { postId = dbPost.PostId });
+        }
     }
 }
