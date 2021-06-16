@@ -1,0 +1,25 @@
+@* This is the data type we passed in from All method in PostsController *@
+@model List<Post>
+
+<h2 class="text-center">All Posts</h2>
+<hr>
+
+@foreach (Post post in Model)
+{
+  <div class="card shadow rounded mx-auto w-75 mb-3">
+    <h4 class="card-title text-center bg-dark text-light py-2 rounded-top">
+      @post.Topic
+    </h4>
+
+    <div class="card-body">
+      <p class="card-text">
+        @post.Body
+      </p>
+      <small class="text-muted">
+        Submitted on: @post.CreatedAt
+      </small>
+    </div>
+
+    <img src="@post.ImgUrl" alt="related to post." class="card-img-bottom">
+  </div>
+}
