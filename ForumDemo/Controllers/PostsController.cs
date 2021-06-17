@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ForumDemo.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace ForumDemo.Controllers
 {
@@ -21,6 +22,11 @@ namespace ForumDemo.Controllers
         [HttpGet("/posts")]
         public IActionResult All()
         {
+            if (HttpContext.Session.GetInt32("UserId") == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             // No .Where means we get all of them.
             List<Post> allPosts = db.Posts.ToList();
             return View("All", allPosts);
