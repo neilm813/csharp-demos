@@ -160,9 +160,35 @@ class Queue {
    * bracket notation, use the queue methods instead for practice.
    * Use no extra array or objects.
    * The queue should be returned to it's original order when done.
-   * - Time: O(?).
-   * - Space: O(?).
+   * - Time: O(n^2) quadratic, n = queue length. Quadratic due to dequeue on an
+   *     array queue being O(n).
+   * - Space: O(1) constant.
    * @returns {boolean} Whether the sum of the left and right halves is equal.
    */
-  isSumOfHalvesEqual() {}
+  isSumOfHalvesEqual() {
+    const len = this.size();
+
+    if (len % 2 !== 0) {
+      return false;
+    }
+
+    const halfLen = len / 2;
+    let leftSum = 0;
+    let rightSum = 0;
+    let count = 0;
+
+    while (count < len) {
+      const dequeued = this.dequeue();
+
+      if (count < halfLen) {
+        leftSum += dequeued;
+      } else {
+        rightSum += dequeued;
+      }
+
+      count++;
+      this.enqueue(dequeued);
+    }
+    return leftSum === rightSum;
+  }
 }
