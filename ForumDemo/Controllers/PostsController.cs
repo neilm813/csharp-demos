@@ -7,11 +7,28 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ForumDemo.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace ForumDemo.Controllers
 {
     public class PostsController : Controller
     {
+        private int? uid
+        {
+            get
+            {
+                return HttpContext.Session.GetInt32("UserId");
+            }
+        }
+
+        private bool isLoggedIn
+        {
+            get
+            {
+                return uid != null;
+            }
+        }
+
         private ForumDemoContext db;
 
         public PostsController(ForumDemoContext context)
@@ -22,31 +39,45 @@ namespace ForumDemo.Controllers
         [HttpGet("/posts")]
         public IActionResult All()
         {
-            if (HttpContext.Session.GetInt32("UserId") == null)
+            if (!isLoggedIn)
             {
                 return RedirectToAction("Index", "Home");
             }
 
             // No .Where means we get all of them.
-            List<Post> allPosts = db.Posts.ToList();
+            List<Post> allPosts = db.Posts
+                .Include(post => post.Author)
+                .ToList();
+
             return View("All", allPosts);
         }
 
         [HttpGet("/posts/new")]
         public IActionResult New()
         {
+            if (!isLoggedIn)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return View("New");
         }
 
         [HttpPost("/posts/create")]
         public IActionResult Create(Post newPost)
         {
+            if (!isLoggedIn)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             if (ModelState.IsValid == false)
             {
                 // Send back to the page with the form to show errors.
                 return View("New");
             }
             // ModelState IS valid...
+            newPost.UserId = (int)uid;
             db.Posts.Add(newPost);
             db.SaveChanges();
             return RedirectToAction("All");
@@ -55,7 +86,14 @@ namespace ForumDemo.Controllers
         [HttpGet("/posts/{postId}")]
         public IActionResult Details(int postId)
         {
-            Post post = db.Posts.FirstOrDefault(p => p.PostId == postId);
+            if (!isLoggedIn)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            Post post = db.Posts
+            .Include(post => post.Author)
+            .FirstOrDefault(p => p.PostId == postId);
 
             if (post == null)
             {
@@ -70,11 +108,14 @@ namespace ForumDemo.Controllers
         {
             Post post = db.Posts.FirstOrDefault(p => p.PostId == postId);
 
-            if (post != null)
+            // If post doesn't exist or not author, redirect away.
+            if (post == null || post.UserId != uid)
             {
-                db.Posts.Remove(post);
-                db.SaveChanges();
+                return RedirectToAction("All");
             }
+
+            db.Posts.Remove(post);
+            db.SaveChanges();
 
             return RedirectToAction("All");
         }
@@ -82,9 +123,15 @@ namespace ForumDemo.Controllers
         [HttpGet("/posts/{postId}/edit")]
         public IActionResult Edit(int postId)
         {
+            if (!isLoggedIn)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             Post post = db.Posts.FirstOrDefault(p => p.PostId == postId);
 
-            if (post == null)
+            // If post doesn't exist or not author, redirect away.
+            if (post == null || post.UserId != uid)
             {
                 return RedirectToAction("All");
             }

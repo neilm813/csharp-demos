@@ -22,5 +22,12 @@ namespace ForumDemo.Models
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
+
+        /* Foreign Keys and Navigation Properties for Relationships */
+
+        // 1 User : Many Post
+        public int UserId { get; set; }
+        public User Author { get; set; }
+
     }
 }

@@ -10,7 +10,7 @@
       @Model.Body
     </p>
     <small class="text-muted">
-      Submitted on: @Model.CreatedAt
+      Submitted by @Model.Author.FullName() on: @Model.CreatedAt
     </small>
   </div>
 
@@ -19,13 +19,16 @@
     <img src="@Model.ImgUrl" alt="related to post." class="card-img-bottom">
   }
 
-  <div class="py-3 text-center">
-    <a asp-controller="Posts" asp-action="Edit" asp-route-postId="@Model.PostId"
+  @if (Model.UserId == Context.Session.GetInt32("UserId"))
+  {
+    <div class="py-3 text-center">
+      <a asp-controller="Posts" asp-action="Edit" asp-route-postId="@Model.PostId"
       class="btn btn-outline-warning">Edit</a>
 
-    <form asp-controller="Posts" asp-action="Delete" asp-route-postId="@Model.PostId" method="POST"
+      <form asp-controller="Posts" asp-action="Delete" asp-route-postId="@Model.PostId" method="POST"
       class="d-inline-block">
-      <button class="btn btn-outline-danger">Delete</button>
-    </form>
-  </div>
+        <button class="btn btn-outline-danger">Delete</button>
+      </form>
+    </div>
+  }
 </div>

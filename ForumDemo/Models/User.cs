@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -40,5 +41,10 @@ namespace ForumDemo.Models
         {
             return FirstName + " " + LastName;
         }
+
+        /* Foreign Keys and Navigation Properties for Relationships */
+
+        // 1 User : Many Post
+        public List<Post> Posts { get; set; }
     }
 }

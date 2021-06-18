@@ -2,6 +2,13 @@
 @model List<Post>
 
 <h2 class="text-center">All Posts</h2>
+
+@* Import concept: create form on same page as displaying a list. *@
+@{
+  Post newPost = new Post();
+}
+<partial name="_createForm" model="@newPost"></partial>
+
 <hr>
 
 @foreach (Post post in Model)
@@ -17,7 +24,8 @@
         @post.Body
       </p>
       <small class="text-muted">
-        Submitted on: @post.CreatedAt
+        Submited by <a asp-controller="Home" asp-action="Details"
+        asp-route-userId="@post.Author.UserId">@post.Author.FullName()</a> on: @post.CreatedAt
       </small>
     </div>
 

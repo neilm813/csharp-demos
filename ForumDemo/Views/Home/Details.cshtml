@@ -1,0 +1,33 @@
+@model User
+
+<div class="container">
+  <h2 class="text-center">
+    Welcome to @Model.FullName()'s Page
+  </h2>
+
+  <p class="text-center">
+    Member since @Model.CreatedAt | Total Posts: @Model.Posts.Count
+  </p>
+
+  <hr>
+
+  @foreach (Post post in Model.Posts)
+  {
+    <div class="card shadow rounded mx-auto w-75 mb-3">
+      <h4 class="card-title text-center bg-dark text-light py-2 rounded-top">
+        <a asp-controller="Posts" asp-action="Details" asp-route-postId="@post.PostId">@post.Topic</a>
+      </h4>
+
+      <div class="card-body">
+        <p class="card-text">
+          @post.Body
+        </p>
+      </div>
+
+      @if (post.ImgUrl != null)
+      {
+        <img src="@post.ImgUrl" alt="related to post." class="card-img-bottom">
+      }
+    </div>
+  }
+</div>
