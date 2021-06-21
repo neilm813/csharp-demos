@@ -44,7 +44,14 @@ namespace ForumDemo.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            // No .Where means we get all of them.
+            /* 
+            No .Where means we get all posts.
+            .Include always gives you the entity from the table being queried
+            for you to select what to include from that model.
+
+            Hover over the parameter to the left of the => to see it's data type if
+            you forget when trying to name it.
+            */
             List<Post> allPosts = db.Posts
                 .Include(post => post.Author)
                 .Include(post => post.Likes)
