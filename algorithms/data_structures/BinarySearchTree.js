@@ -135,6 +135,17 @@ class BinarySearchTree {
     }
     return this.maxRecursive(current.right);
   }
+
+  minOrMax(current = this.root, min = true) {
+    if (current === null) {
+      return null;
+    }
+
+    while (current.left) {
+      current = current.left;
+    }
+    return current.data;
+  }
 }
 
 const emptyTree = new BinarySearchTree();
