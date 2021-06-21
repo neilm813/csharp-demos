@@ -1,7 +1,7 @@
 /**
  * Class to represent a Node in a Binary Search Tree (BST).
  */
- class Node {
+class Node {
   /**
    * Constructs a new instance of a BST node.
    * @param {number} data The integer to store in the node.
@@ -50,53 +50,53 @@ class BinarySearchTree {
     this.print(node.left, spaceCnt);
   }
 
-/**
- * Determines if this tree is empty.
- * - Time: O(?).
- * - Space: O(?).
- * @returns {boolean} Indicates if this tree is empty.
- */
- isEmpty() {}
+  /**
+   * Determines if this tree is empty.
+   * - Time: O(?).
+   * - Space: O(?).
+   * @returns {boolean} Indicates if this tree is empty.
+   */
+  isEmpty() {}
 
- /**
-  * Retrieves the smallest integer data from this tree.
-  * - Time: O(?).
-  * - Space: O(?).
-  * @param {Node} current The node that is currently accessed from the tree as
-  *    the tree is being traversed.
-  * @returns {number} The smallest integer from this tree.
-  */
- min(current = this.root) {}
- 
- /**
-  * Retrieves the smallest integer data from this tree.
-  * - Time: O(?).
-  * - Space: O(?).
-  * @param {Node} current The node that is currently accessed from the tree as
-  *    the tree is being traversed.
-  * @returns {number} The smallest integer from this tree.
-  */
- minRecursive(current = this.root) {}
- 
- /**
-  * Retrieves the largest integer data from this tree.
-  * - Time: O(?).
-  * - Space: O(?).
-  * @param {Node} current The node that is currently accessed from the tree as
-  *    the tree is being traversed.
-  * @returns {number} The largest integer from this tree.
-  */
- max(current = this.root) {}
- 
- /**
-  * Retrieves the largest integer data from this tree.
-  * - Time: O(?).
-  * - Space: O(?).
-  * @param {Node} current The node that is currently accessed from the tree as
-  *    the tree is being traversed.
-  * @returns {number} The largest integer from this tree.
-  */
- maxRecursive(current = this.root) {}
+  /**
+   * Retrieves the smallest integer data from this tree.
+   * - Time: O(?).
+   * - Space: O(?).
+   * @param {Node} current The node that is currently accessed from the tree as
+   *    the tree is being traversed.
+   * @returns {number} The smallest integer from this tree.
+   */
+  min(current = this.root) {}
+
+  /**
+   * Retrieves the smallest integer data from this tree.
+   * - Time: O(?).
+   * - Space: O(?).
+   * @param {Node} current The node that is currently accessed from the tree as
+   *    the tree is being traversed.
+   * @returns {number} The smallest integer from this tree.
+   */
+  minRecursive(current = this.root) {}
+
+  /**
+   * Retrieves the largest integer data from this tree.
+   * - Time: O(?).
+   * - Space: O(?).
+   * @param {Node} current The node that is currently accessed from the tree as
+   *    the tree is being traversed.
+   * @returns {number} The largest integer from this tree.
+   */
+  max(current = this.root) {}
+
+  /**
+   * Retrieves the largest integer data from this tree.
+   * - Time: O(?).
+   * - Space: O(?).
+   * @param {Node} current The node that is currently accessed from the tree as
+   *    the tree is being traversed.
+   * @returns {number} The largest integer from this tree.
+   */
+  maxRecursive(current = this.root) {}
 }
 
 const emptyTree = new BinarySearchTree();
