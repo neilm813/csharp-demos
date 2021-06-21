@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace ForumDemo.Models
@@ -29,5 +30,7 @@ namespace ForumDemo.Models
         public int UserId { get; set; }
         public User Author { get; set; }
 
+        // Many to Many - 1 Post can be liked by many users.
+        public List<UserPostLike> Likes { get; set; }
     }
 }

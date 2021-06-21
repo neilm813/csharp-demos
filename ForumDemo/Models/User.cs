@@ -44,7 +44,10 @@ namespace ForumDemo.Models
 
         /* Foreign Keys and Navigation Properties for Relationships */
 
-        // 1 User : Many Post
+        // 1 User : Many Post that they created
         public List<Post> Posts { get; set; }
+
+        // Many to Many - 1 User can like many posts
+        public List<UserPostLike> Likes { get; set; }
     }
 }

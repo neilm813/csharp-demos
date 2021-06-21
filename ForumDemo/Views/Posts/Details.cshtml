@@ -19,9 +19,9 @@
     <img src="@Model.ImgUrl" alt="related to post." class="card-img-bottom">
   }
 
-  @if (Model.UserId == Context.Session.GetInt32("UserId"))
-  {
-    <div class="py-3 text-center">
+  <div class="card-footer">
+    @if (Model.UserId == Context.Session.GetInt32("UserId"))
+    {
       <a asp-controller="Posts" asp-action="Edit" asp-route-postId="@Model.PostId"
       class="btn btn-outline-warning">Edit</a>
 
@@ -29,6 +29,20 @@
       class="d-inline-block">
         <button class="btn btn-outline-danger">Delete</button>
       </form>
-    </div>
-  }
+    }
+
+    <h3>Likes:</h3>
+    @foreach (UserPostLike like in Model.Likes)
+    {
+      @* This adds a comma at the end, it can be avoided by doing a loop with i
+        and checking if i is the last index and conditionally adding the comma.
+        OR, see below. *@
+      <span>@like.User.FullName(), </span>
+    }
+
+    <h3>Likes with String.Join</h3>
+    <span>
+      @String.Join(", ", Model.Likes.Select(like => like.User.FullName()))
+    </span>
+  </div>
 </div>

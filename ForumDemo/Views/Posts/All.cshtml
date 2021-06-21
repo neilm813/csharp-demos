@@ -33,5 +33,25 @@
     {
       <img src="@post.ImgUrl" alt="related to post." class="card-img-bottom">
     }
+
+    <div class="card-footer text-center">
+      <form asp-controller="Posts" asp-action="Like" asp-route-postId="@post.PostId">
+        @{
+          bool alreadyLiked = post.Likes.Any(like => Context.Session.GetInt32("UserId") == like.UserId);
+        }
+
+        <button class="btn btn-outline-info">
+          @if (alreadyLiked)
+          {
+            <span>Unlike</span>
+          }
+          else
+          {
+            <span>Like</span>
+          }
+          <span>(@post.Likes.Count)</span>
+        </button>
+      </form>
+    </div>
   </div>
 }

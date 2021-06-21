@@ -3,14 +3,16 @@ using System;
 using ForumDemo.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ForumDemo.Migrations
 {
     [DbContext(typeof(ForumDemoContext))]
-    partial class ForumDemoContextModelSnapshot : ModelSnapshot
+    [Migration("20210621173639_AddedLikeRelationship")]
+    partial class AddedLikeRelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -108,7 +110,7 @@ namespace ForumDemo.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserPostLikes");
+                    b.ToTable("UserPostLike");
                 });
 
             modelBuilder.Entity("ForumDemo.Models.Post", b =>

@@ -47,6 +47,7 @@ namespace ForumDemo.Controllers
             // No .Where means we get all of them.
             List<Post> allPosts = db.Posts
                 .Include(post => post.Author)
+                .Include(post => post.Likes)
                 .ToList();
 
             return View("All", allPosts);
@@ -93,6 +94,10 @@ namespace ForumDemo.Controllers
 
             Post post = db.Posts
             .Include(post => post.Author)
+            .Include(post => post.Likes)
+            // .ThenInclude is for including something on the thing that was
+            // just previously Included (we just included Likes above).
+            .ThenInclude(like => like.User)
             .FirstOrDefault(p => p.PostId == postId);
 
             if (post == null)
@@ -165,6 +170,36 @@ namespace ForumDemo.Controllers
 
             // Dict matches Details params     new { paramName = paramValue }
             return RedirectToAction("Details", new { postId = dbPost.PostId });
+        }
+
+        [HttpPost("/posts/{postId}/like")]
+        public IActionResult Like(int postId)
+        {
+            if (!isLoggedIn)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            UserPostLike existingLike = db.UserPostLikes
+                .FirstOrDefault(like => like.PostId == postId && (int)uid == like.UserId);
+
+            if (existingLike == null)
+            {
+                UserPostLike like = new UserPostLike()
+                {
+                    PostId = postId,
+                    UserId = (int)uid
+                };
+
+                db.UserPostLikes.Add(like);
+            }
+            else
+            {
+                db.UserPostLikes.Remove(existingLike);
+            }
+
+            db.SaveChanges();
+            return RedirectToAction("All");
         }
     }
 }
