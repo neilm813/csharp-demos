@@ -42,13 +42,20 @@ namespace TravelPlanner.Models
             return FirstName + " " + LastName;
         }
 
-        /* Foreign Keys and Navigation Properties for Relationships */
+        /* 
+        Foreign Keys and Navigation Properties for Relationships
+        The below navigation properties (not foreign keys) MUST be included with
+        .Include, otherwise they will be null.
+        */
 
         // 1 User to Many Trips created
         public List<Trip> CreatedTrips { get; set; }
 
         // 1 User to Many LocationMedia created
         public List<LocationMedia> CreatedLocationMedias { get; set; }
+
+        // Many User : Many Trip for Likes
+        public List<UserTripLike> UserTripLikes { get; set; }
 
     }
 }

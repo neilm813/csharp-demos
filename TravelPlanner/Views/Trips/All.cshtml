@@ -1,1 +1,16 @@
-<h2>All Trips</h2>
+@model List<Trip>
+
+<h2 class="text-center">All Trips</h2>
+
+@foreach (Trip trip in Model)
+{
+  <div class="text-center">
+    <hr>
+    <h4>
+      <a asp-controller="Trips" asp-action="Details" asp-route-tripId="@trip.TripId">
+        @trip.Name
+      </a>
+    </h4>
+    <small>@trip.Description</small>
+  </div>
+}

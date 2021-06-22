@@ -1,17 +1,20 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace TravelPlanner.Models
 {
     public class LocationMedia
     {
+        [Key]
         public int LocationMediaId { get; set; }
-        
+
         [Required(ErrorMessage = "is required.")]
         [MinLength(2, ErrorMessage = "must be at least 2 characters")]
         public string Location { get; set; }
 
         [Required(ErrorMessage = "is required.")]
+        [Display(Name = "Media Url")]
         public string Src { get; set; }
 
         [Required(ErrorMessage = "is required.")]
@@ -26,10 +29,17 @@ namespace TravelPlanner.Models
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
 
-        /* Foreign Keys and Navigation Properties for Relationships */
+        /* 
+        Foreign Keys and Navigation Properties for Relationships
+        The below navigation properties (not foreign keys) MUST be included with
+        .Include, otherwise they will be null.
+        */
 
         // 1 User to Many LocationMedia created
         public int UserId { get; set; }
         public User CreatedBy { get; set; }
+
+        // Many Trip : Many LocationMedia
+        public List<TripLocationPlan> TripLocationPlans { get; set; }
     }
 }

@@ -11,7 +11,7 @@ using TravelPlanner.Models;
 
 namespace TravelPlanner.Controllers
 {
-    public class TripsController : Controller
+    public class LocationMediasController : Controller
     {
         private int? uid
         {
@@ -31,26 +31,26 @@ namespace TravelPlanner.Controllers
 
         private TravelPlannerContext db;
 
-        public TripsController(TravelPlannerContext context)
+        public LocationMediasController(TravelPlannerContext context)
         {
             db = context;
         }
 
-        [HttpGet("/trips")]
+        [HttpGet("/locationmedias")]
         public IActionResult All()
         {
-            List<Trip> trips = db.Trips.ToList();
-            return View("All", trips);
+            List<LocationMedia> locationMedias = db.LocationMedias.ToList();
+            return View("All", locationMedias);
         }
 
-        [HttpGet("/trips/new")]
+        [HttpGet("/locationmedias/new")]
         public IActionResult New()
         {
             return View("New");
         }
 
-        [HttpPost("/trips/create")]
-        public IActionResult Create(Trip newTrip)
+        [HttpPost("/locationmedias/create")]
+        public IActionResult Create(LocationMedia newLocationMedia)
         {
             if (!ModelState.IsValid)
             {
@@ -58,8 +58,8 @@ namespace TravelPlanner.Controllers
                 return View("New");
             }
 
-            newTrip.UserId = (int)uid;
-            db.Trips.Add(newTrip);
+            newLocationMedia.UserId = (int)uid;
+            db.LocationMedias.Add(newLocationMedia);
             db.SaveChanges();
             return RedirectToAction("All");
         }
