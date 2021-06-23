@@ -19,6 +19,6 @@ namespace TravelPlanner.Models
         public int TripId { get; set; }
         public Trip Trip { get; set; }
         public int DestinationMediaId { get; set; }
-        public DestinationMedia LocationMedia { get; set; }
+        public DestinationMedia DestinationMedia { get; set; }
     }
 }

@@ -90,6 +90,7 @@ namespace TravelPlanner.Controllers
 
             Trip trip = db.Trips
                 .Include(t => t.TripDestinations)
+                .ThenInclude(td => td.DestinationMedia)
                 .FirstOrDefault(t => t.TripId == tripId);
 
             if (trip == null)
@@ -112,7 +113,32 @@ namespace TravelPlanner.Controllers
 
             ViewBag.DestinationsToAdd = destinationsToAdd.OrderBy(dm => dm.Location, System.StringComparer.CurrentCultureIgnoreCase);
 
+            // ViewBag.DestinationsToAdd = db.DestinationMedias
+            //     .Where(
+            //         dest => !dest.TripDestinations
+            //             .Any(td => td.TripId == trip.TripId)
+            //     )
+            //     .OrderBy(d => d.Location, System.StringComparer.CurrentCultureIgnoreCase)
+            //     .ToList();
+
             return View("Details", trip);
+        }
+
+        [HttpPost("/trips/{tripId}/add-destination")]
+        public IActionResult AddDestination(int tripId, TripDestination newTripDestination)
+        {
+            newTripDestination.TripId = tripId;
+
+            bool alreadyExists = db.TripDestinations
+                .Any(td => td.TripId == newTripDestination.TripId && td.DestinationMediaId == newTripDestination.DestinationMediaId);
+
+            if (!alreadyExists)
+            {
+                db.TripDestinations.Add(newTripDestination);
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Details", new { tripId = newTripDestination.TripId });
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

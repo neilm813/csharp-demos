@@ -18,4 +18,26 @@
   }
   <partial name="_AddLocation" model="@td"></partial>
   <hr>
+
+  @foreach (TripDestination tripDestination in Model.TripDestinations)
+  {
+    <small>
+      @tripDestination.DestinationMedia.Location - @tripDestination.DestinationMedia.ShortDescription
+    </small>
+
+    @if (tripDestination.DestinationMedia.Type == "Image")
+    {
+      <img src="@tripDestination.DestinationMedia.Src" alt="@tripDestination.DestinationMedia.ShortDescription" width="100%" class="shadow">
+    }
+    else if (tripDestination.DestinationMedia.Type == "Youtube Embed" || tripDestination.DestinationMedia.Type == "Google Maps Embed")
+    {
+      <iframe title="@tripDestination.DestinationMedia.ShortDescription" width="100%" height="800" src="@tripDestination.DestinationMedia.Src" frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen class="shadow"></iframe>
+    }
+    else {
+      <iframe title="@tripDestination.DestinationMedia.ShortDescription" src="@tripDestination.DestinationMedia.Src" width="100%" height="800" style="border: 0" allowfullscreen=""
+      loading="lazy" class="shadow"></iframe>
+    }
+  }
 </div>

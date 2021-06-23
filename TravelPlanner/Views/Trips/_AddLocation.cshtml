@@ -1,6 +1,12 @@
 @model TripDestination
 
-<form asp-controller="Trips" asp-action="AddLocationMedia" asp-route-tripId="@Model.TripId">
+@*
+  Even though TripId is assigned to this model in Details.cshtml, unless it is
+  added to the form as a route parameter (in the url) or as a hidden input
+  it will be reset and a foreign key constraint error will occur.
+*@
+
+<form asp-controller="Trips" asp-action="AddDestination" asp-route-TripId="@Model.TripId">
 
   <select asp-for="@Model.DestinationMediaId" class="form-control mb-2">
     @foreach (DestinationMedia destination in ViewBag.DestinationsToAdd)
