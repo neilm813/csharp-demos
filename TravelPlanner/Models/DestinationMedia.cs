@@ -4,10 +4,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TravelPlanner.Models
 {
-    public class LocationMedia
+    public class DestinationMedia
     {
         [Key]
-        public int LocationMediaId { get; set; }
+        public int DestinationMediaId { get; set; }
 
         [Required(ErrorMessage = "is required.")]
         [MinLength(2, ErrorMessage = "must be at least 2 characters")]
@@ -19,8 +19,9 @@ namespace TravelPlanner.Models
 
         [Required(ErrorMessage = "is required.")]
         [Display(Name = "Media Type")]
-        public string MediaType { get; set; }
+        public string Type { get; set; }
 
+        [Display(Name = "Short Description")]
         [Required(ErrorMessage = "is required.")]
         [MinLength(4, ErrorMessage = "must be between 4-255 characters.")]
         [MaxLength(255, ErrorMessage = "must be between 4-255 characters.")]
@@ -40,6 +41,6 @@ namespace TravelPlanner.Models
         public User CreatedBy { get; set; }
 
         // Many Trip : Many LocationMedia
-        public List<TripLocationPlan> TripLocationPlans { get; set; }
+        public List<TripDestination> TripDestinations { get; set; }
     }
 }

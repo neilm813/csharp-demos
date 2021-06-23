@@ -3,10 +3,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TravelPlanner.Models
 {
-    public class TripLocationPlan // Many To Many 'Through' / 'Join' Table
+    public class TripDestination // Many To Many 'Through' / 'Join' Table
     {
         [Key]
-        public int TripLocationPlanId { get; set; }
+        public int TripDestinationId { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
@@ -18,7 +18,7 @@ namespace TravelPlanner.Models
         */
         public int TripId { get; set; }
         public Trip Trip { get; set; }
-        public int LocationMediaId { get; set; }
-        public LocationMedia LocationMedia { get; set; }
+        public int DestinationMediaId { get; set; }
+        public DestinationMedia LocationMedia { get; set; }
     }
 }

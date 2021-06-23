@@ -33,7 +33,7 @@ namespace TravelPlanner.Models
         public User CreatedBy { get; set; }
 
         // Many Trip : Many LocationMedia
-        public List<TripLocationPlan> TripLocationPlans { get; set; }
+        public List<TripDestination> TripDestinations { get; set; }
 
         // Many User : Many Trip for Likes
         public List<UserTripLike> UserTripLikes { get; set; }

@@ -10,8 +10,8 @@ namespace TravelPlanner.Models
         // the names of these properties will be the names of the tables in the db
         public DbSet<User> Users { get; set; }
         public DbSet<Trip> Trips { get; set; }
-        public DbSet<LocationMedia> LocationMedias { get; set; }
-        public DbSet<TripLocationPlan> TripLocationPlans { get; set; }
+        public DbSet<DestinationMedia> DestinationMedias { get; set; }
+        public DbSet<TripDestination> TripDestinations { get; set; }
         public DbSet<UserTripLike> UserTripLikes { get; set; }
     }
 

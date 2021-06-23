@@ -9,8 +9,8 @@ using TravelPlanner.Models;
 namespace TravelPlanner.Migrations
 {
     [DbContext(typeof(TravelPlannerContext))]
-    [Migration("20210622221834_AddRelationships")]
-    partial class AddRelationships
+    [Migration("20210623191458_First")]
+    partial class First
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -19,9 +19,9 @@ namespace TravelPlanner.Migrations
                 .HasAnnotation("ProductVersion", "3.1.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("TravelPlanner.Models.LocationMedia", b =>
+            modelBuilder.Entity("TravelPlanner.Models.DestinationMedia", b =>
                 {
-                    b.Property<int>("LocationMediaId")
+                    b.Property<int>("DestinationMediaId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
@@ -29,10 +29,6 @@ namespace TravelPlanner.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Location")
-                        .IsRequired()
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("MediaType")
                         .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
@@ -45,17 +41,21 @@ namespace TravelPlanner.Migrations
                         .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.HasKey("LocationMediaId");
+                    b.HasKey("DestinationMediaId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("LocationMedias");
+                    b.ToTable("DestinationMedias");
                 });
 
             modelBuilder.Entity("TravelPlanner.Models.Trip", b =>
@@ -67,7 +67,7 @@ namespace TravelPlanner.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime?>("Date")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Description")
@@ -91,16 +91,16 @@ namespace TravelPlanner.Migrations
                     b.ToTable("Trips");
                 });
 
-            modelBuilder.Entity("TravelPlanner.Models.TripLocationPlan", b =>
+            modelBuilder.Entity("TravelPlanner.Models.TripDestination", b =>
                 {
-                    b.Property<int>("TripLocationPlanId")
+                    b.Property<int>("TripDestinationId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("LocationMediaId")
+                    b.Property<int>("DestinationMediaId")
                         .HasColumnType("int");
 
                     b.Property<int>("TripId")
@@ -109,13 +109,13 @@ namespace TravelPlanner.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.HasKey("TripLocationPlanId");
+                    b.HasKey("TripDestinationId");
 
-                    b.HasIndex("LocationMediaId");
+                    b.HasIndex("DestinationMediaId");
 
                     b.HasIndex("TripId");
 
-                    b.ToTable("TripLocationPlans");
+                    b.ToTable("TripDestinations");
                 });
 
             modelBuilder.Entity("TravelPlanner.Models.User", b =>
@@ -178,10 +178,10 @@ namespace TravelPlanner.Migrations
                     b.ToTable("UserTripLikes");
                 });
 
-            modelBuilder.Entity("TravelPlanner.Models.LocationMedia", b =>
+            modelBuilder.Entity("TravelPlanner.Models.DestinationMedia", b =>
                 {
                     b.HasOne("TravelPlanner.Models.User", "CreatedBy")
-                        .WithMany("CreatedLocationMedias")
+                        .WithMany("CreatedDestinationMedias")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -196,16 +196,16 @@ namespace TravelPlanner.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TravelPlanner.Models.TripLocationPlan", b =>
+            modelBuilder.Entity("TravelPlanner.Models.TripDestination", b =>
                 {
-                    b.HasOne("TravelPlanner.Models.LocationMedia", "LocationMedia")
-                        .WithMany("TripLocationPlans")
-                        .HasForeignKey("LocationMediaId")
+                    b.HasOne("TravelPlanner.Models.DestinationMedia", "LocationMedia")
+                        .WithMany("TripDestinations")
+                        .HasForeignKey("DestinationMediaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("TravelPlanner.Models.Trip", "Trip")
-                        .WithMany("TripLocationPlans")
+                        .WithMany("TripDestinations")
                         .HasForeignKey("TripId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

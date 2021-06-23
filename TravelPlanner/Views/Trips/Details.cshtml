@@ -1,0 +1,21 @@
+@model Trip
+
+<div class="w75 mx-auto">
+  <div class="text-center">
+    <h2>
+      @Model.Name
+    </h2>
+    <p>
+      @Model.Date - @Model.Description
+    </p>
+  </div>
+
+  @{
+    TripDestination td = new TripDestination
+    {
+      TripId = Model.TripId
+    };
+  }
+  <partial name="_AddLocation" model="@td"></partial>
+  <hr>
+</div>
