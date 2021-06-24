@@ -36,7 +36,7 @@ namespace TravelPlanner.Controllers
             db = context;
         }
 
-        [HttpGet("/locationmedias")]
+        [HttpGet("/destinationmedias")]
         public IActionResult All()
         {
             if (!isLoggedIn)
@@ -48,7 +48,7 @@ namespace TravelPlanner.Controllers
             return View("All", locationMedias);
         }
 
-        [HttpGet("/locationmedias/new")]
+        [HttpGet("/destinationmedias/new")]
         public IActionResult New()
         {
             if (!isLoggedIn)
@@ -59,7 +59,7 @@ namespace TravelPlanner.Controllers
             return View("New");
         }
 
-        [HttpPost("/locationmedias/create")]
+        [HttpPost("/destinationmedias/create")]
         public IActionResult Create(DestinationMedia newLocationMedia)
         {
             if (!isLoggedIn)

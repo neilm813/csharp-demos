@@ -45,7 +45,10 @@ namespace TravelPlanner.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            List<Trip> trips = db.Trips.ToList();
+            List<Trip> trips = db.Trips
+                .Include(t => t.UserTripLikes)
+                .ThenInclude(like => like.User)
+                .ToList();
             return View("All", trips);
         }
 
@@ -139,6 +142,45 @@ namespace TravelPlanner.Controllers
             }
 
             return RedirectToAction("Details", new { tripId = newTripDestination.TripId });
+        }
+
+        [HttpPost("/trips/{tripId}/{destinationMediaId}/remove")]
+        public IActionResult RemoveDestination(int tripId, int destinationMediaId)
+        {
+            TripDestination foundTd = db.TripDestinations.FirstOrDefault(td => td.TripId == tripId && td.DestinationMediaId == destinationMediaId);
+
+            if (foundTd != null)
+            {
+                db.TripDestinations.Remove(foundTd);
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Details", new { tripId = tripId });
+        }
+
+        [HttpPost("/trips/{tripId}/like")]
+        public IActionResult Like(int tripId)
+        {
+            UserTripLike foundLike = db.UserTripLikes
+                .FirstOrDefault(like => like.TripId == tripId && like.UserId == uid);
+
+            if (foundLike == null)
+            {
+                UserTripLike newLike = new UserTripLike()
+                {
+                    UserId = (int)uid,
+                    TripId = tripId
+                };
+
+                db.UserTripLikes.Add(newLike);
+            }
+            else
+            {
+                db.UserTripLikes.Remove(foundLike);
+            }
+
+            db.SaveChanges();
+            return RedirectToAction("All");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -4,6 +4,8 @@
 
 @foreach (Trip trip in Model)
 {
+  bool alreadyLiked = trip.UserTripLikes.Any(like => like.UserId == Context.Session.GetInt32("UserId"));
+
   <div class="text-center">
     <hr>
     <h4>
@@ -12,5 +14,26 @@
       </a>
     </h4>
     <small>@trip.Description</small>
+    <div>
+      <form asp-controller="Trips" asp-action="Like" asp-route-tripId="@trip.TripId" method="POST">
+        <button class="btn btn-outline-secondary">
+          @if (alreadyLiked)
+          {
+            <span>Unlike</span>
+          }
+          else
+          {
+            <span>Like</span>
+          }
+        </button>
+      </form>
+      <div>
+        <span>Liked by: </span>
+        @foreach (UserTripLike like in trip.UserTripLikes)
+        {
+          <span>@like.User.FirstName @like.User.LastName, </span>
+        }
+      </div>
+    </div>
   </div>
 }

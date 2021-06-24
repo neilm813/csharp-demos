@@ -39,5 +39,14 @@
       <iframe title="@tripDestination.DestinationMedia.ShortDescription" src="@tripDestination.DestinationMedia.Src" width="100%" height="800" style="border: 0" allowfullscreen=""
       loading="lazy" class="shadow"></iframe>
     }
+
+    @if (Context.Session.GetInt32("UserId") == Model.UserId)
+    {
+      <div>
+        <form asp-controller="Trips" asp-action="RemoveDestination" asp-route-destinationMediaId="@tripDestination.DestinationMediaId">
+          <button class="btn btn-outline-danger">Remove</button>
+        </form>
+      </div>
+    }
   }
 </div>
