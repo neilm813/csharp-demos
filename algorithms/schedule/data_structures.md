@@ -73,3 +73,7 @@
 ## [Week 3 - Binary Search Tree](../data_structures/BinarySearchTree.js)
 
 - [BST Intro](../data_structures/BinarySearchTree.md)
+
+## Week 4 - Min Heap & Linked Lists Part 2
+
+### W4 Mon - [SinglyLinkedList](../data_structures/SinglyLinkedList.js)
