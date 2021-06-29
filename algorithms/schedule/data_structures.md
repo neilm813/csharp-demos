@@ -77,3 +77,5 @@
 ## Week 4 - Min Heap & Linked Lists Part 2
 
 ### W4 Mon - [SinglyLinkedList](../data_structures/SinglyLinkedList.js)
+
+### W4 Tue - [DoublyLinkedList](../data_structures/DoublyLinkedList.js)
