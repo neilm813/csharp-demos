@@ -41,14 +41,12 @@ namespace MusicLibrary
             playlist2.AddSong("Animals", library);
             playlist2.AddSong("Migration", library);
             playlist2.AddSong("The Drop", library);
-            playlist2.AddSong("Sleep At Nightt", library);
+            playlist2.AddSong("Sleep At Night", library);
 
             library.Playlists.Add(playlist1);
             library.Playlists.Add(playlist2);
 
             Console.WriteLine("Yay music");
-
-            var x = new Test()
         }
     }
 }
