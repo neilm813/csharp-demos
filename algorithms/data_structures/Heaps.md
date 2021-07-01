@@ -21,7 +21,7 @@
 
 - parent is located at `Math.floor(i / 2);`
 - left child is located at `i * 2`
-- right child is located at `i * 2 + 1`
+- right child is located at `(i * 2) + 1`
 
 ### When 0th index is _used_
 
