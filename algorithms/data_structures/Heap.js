@@ -18,23 +18,77 @@ class MinHeap {
   }
 
   /**
+   * Retrieves the size of the heap, ignoring the null placeholder.
+   * - Time: O(1) constant.
+   * - Space: O(1) constant.
+   * @returns {?number} Null if empty.
+   */
+  size() {
+    // - 1 since 0 index is unused
+    return this.heap.length - 1;
+  }
+
+  /**
    * Retrieves the top (minimum number) in the heap without removing it.
    * - Time: O(1) constant.
    * - Space: O(1) constant.
    * @returns {?number} Null if empty.
    */
-  top() {}
+  top() {
+    return this.heap.length > 1 ? this.heap[1] : null;
+  }
 
   /**
-   * Inserts a new number into the heap and maintains the heaps order.
-   * 1. Push new num to back then.
+   * Inserts a new number into the heap and reorders heap to maintain order.
+   * 1. Push new num to back.
    * 2. Iteratively swap the new num with it's parent while it is smaller than
    *    it's parent.
-   * - Time: O(log n) logarithmic due to shiftUp / iterative swapping.
+   * - Time: O(log n) logarithmic due to shiftUp.
    * - Space: O(1) constant.
    * @param {number} num The num to add.
    */
-  insert(num) {}
+  insert(num) {
+    this.heap.push(num);
+    this.shiftUp();
+    return this.size();
+  }
+
+  // AKA: siftUp, heapifyUp, bubbleUp to restore order after insert
+  shiftUp() {
+    // just to avoid repeatedly typing this.heap
+    const heap = this.heap;
+    let idxOfNodeToShiftUp = heap.length - 1;
+
+    this.printArr(
+      `shiftUp start from back to shift ${heap[idxOfNodeToShiftUp]} up:`
+    );
+    this.printHorizontalTree();
+
+    while (idxOfNodeToShiftUp > 1) {
+      const idxOfParent = Math.floor(idxOfNodeToShiftUp / 2);
+
+      // parent already smaller, no more swapping needed
+      if (heap[idxOfParent] <= heap[idxOfNodeToShiftUp]) {
+        break;
+      }
+
+      // while the parent is not smaller, swap it with it's child (array destructure syntax)
+      // when the while loop is done, the new node is in it's correct place so all parents are smaller than children
+      [heap[idxOfNodeToShiftUp], heap[idxOfParent]] = [
+        heap[idxOfParent],
+        heap[idxOfNodeToShiftUp],
+      ];
+
+      this.printArr(
+        `shiftUp swapped ${heap[idxOfParent]} & ${heap[idxOfNodeToShiftUp]}:`
+      );
+      this.printHorizontalTree();
+
+      // since it was swapped with parent, it is now located at the idxOfParent
+      idxOfNodeToShiftUp = idxOfParent;
+    }
+    console.log("shiftUp done\n");
+  }
 
   /**
    * Logs the tree horizontally with the root on the left and the index in
@@ -55,4 +109,16 @@ class MinHeap {
 
     this.printHorizontalTree(parentIdx * 2, spaceCnt);
   }
+
+  printArr(...appendedMsgs) {
+    const arrStr = `\n[${["null", ...this.heap.slice(1)].join(", ")}]`;
+    const msgLen = arrStr.length + appendedMsgs.toString().length;
+    console.log("-".repeat(msgLen), arrStr, ...appendedMsgs);
+  }
 }
+
+const minHeap = new MinHeap();
+minHeap.insert(10);
+minHeap.insert(20);
+minHeap.insert(15);
+minHeap.insert(5);
