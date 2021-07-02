@@ -80,6 +80,6 @@
 
 ### W4 Tue - [DoublyLinkedList](../data_structures/DoublyLinkedList.js)
 
-### W4 Thur - [Heap.js](../data_structures/Heap.js) | [HeapSpec](../spec/data_structures/HeapSpec.js)
+### W4 Thur & Fri - [Heap.js](../data_structures/Heap.js) | [HeapSpec](../spec/data_structures/HeapSpec.js)
 
 - [Heaps Intro](../data_structures/Heaps.md)
