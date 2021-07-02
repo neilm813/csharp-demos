@@ -18,6 +18,32 @@ class MinHeap {
   }
 
   /**
+   * Logs the tree horizontally with the root on the left and the index in
+   * parenthesis using reverse inorder traversal.
+   */
+  printHorizontalTree(parentIdx = 1, spaceCnt = 0, spaceIncr = 10) {
+    if (parentIdx > this.heap.length - 1) {
+      return;
+    }
+
+    spaceCnt += spaceIncr;
+    this.printHorizontalTree(parentIdx * 2 + 1, spaceCnt);
+
+    console.log(
+      " ".repeat(spaceCnt < spaceIncr ? 0 : spaceCnt - spaceIncr) +
+        `${this.heap[parentIdx]} (${parentIdx})`
+    );
+
+    this.printHorizontalTree(parentIdx * 2, spaceCnt);
+  }
+
+  printArr(...appendedMsgs) {
+    const arrStr = `\n[${["null", ...this.heap.slice(1)].join(", ")}]`;
+    const msgLen = arrStr.length + appendedMsgs.toString().length;
+    console.log("-".repeat(msgLen), arrStr, ...appendedMsgs);
+  }
+
+  /**
    * Retrieves the size of the heap, ignoring the null placeholder.
    * - Time: O(1) constant.
    * - Space: O(1) constant.
@@ -91,30 +117,17 @@ class MinHeap {
   }
 
   /**
-   * Logs the tree horizontally with the root on the left and the index in
-   * parenthesis using reverse inorder traversal.
+   * Extracts the min num from the heap and then re-orders the heap to
+   * maintain order so the next min is ready to be extracted.
+   * 1. Save the first node to a temp var.
+   * 2. Pop last node off and overwrite idx1 with it.
+   * 3. Iteratively swap the old last node that is now at idx1 with it's
+   *    smallest child IF the smallest child is smaller than it.
+   * - Time: O(log n) logarithmic due to shiftDown.
+   * - Space: O(1) constant.
+   * @returns {?number} The min number or null if empty.
    */
-  printHorizontalTree(parentIdx = 1, spaceCnt = 0, spaceIncr = 10) {
-    if (parentIdx > this.heap.length - 1) {
-      return;
-    }
-
-    spaceCnt += spaceIncr;
-    this.printHorizontalTree(parentIdx * 2 + 1, spaceCnt);
-
-    console.log(
-      " ".repeat(spaceCnt < spaceIncr ? 0 : spaceCnt - spaceIncr) +
-        `${this.heap[parentIdx]} (${parentIdx})`
-    );
-
-    this.printHorizontalTree(parentIdx * 2, spaceCnt);
-  }
-
-  printArr(...appendedMsgs) {
-    const arrStr = `\n[${["null", ...this.heap.slice(1)].join(", ")}]`;
-    const msgLen = arrStr.length + appendedMsgs.toString().length;
-    console.log("-".repeat(msgLen), arrStr, ...appendedMsgs);
-  }
+  extract() {}
 }
 
 const minHeap = new MinHeap();
